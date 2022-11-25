@@ -1,0 +1,263 @@
+
+Q1. Find Employee details and Department details using NATURAL JOIN. 
+mysql> select * from Employee NATURAL JOIN Dept;
++---------+--------+----------+-----------+-------------+------------+------------+------------+-----------+
+| Dept_id | Emp_id | fname    | lname     | designation | salary     | JoinDate   | dname      | dlocation |
++---------+--------+----------+-----------+-------------+------------+------------+------------+-----------+
+|       1 |  31307 | Shivam   | Dhonde    | Manager     | 3500000.75 | 2024-10-15 | Computer   | Pune      |
+|       1 |  31309 | Tanmay   | Jadhav    | Software E  |  200200.55 | 2024-12-05 | Computer   | Pune      |
+|       1 |  31315 | Jay      | Mehta     | Product Ma  |  100000.75 | 2024-09-15 | Computer   | Pune      |
+|       1 |  31323 | Gautam   | Khaire    | Software E  |  350000.75 | 2024-05-06 | Computer   | Pune      |
+|       1 |  31324 | Shrikant | Kharat    | Software E  |  250000.75 | 2024-07-10 | Computer   | Pune      |
+|       1 |  31333 | Pradnya  | Kumar     | Manager     |   98129.89 | 2020-10-07 | Computer   | Pune      |
+|       1 |  31337 | Ankush   | Mehta     | Manager     |   50000000 | 2024-01-15 | Computer   | Pune      |
+|       2 |  31335 | Pranjal  | Deasi     | Product Ma  |   90329.89 | 2020-10-07 | IT         | Pune      |
+|       2 |  31980 | Chanchal | Wadhwa    | Software E  | 3000000.75 | 2024-10-05 | IT         | Pune      |
+|       2 |  31981 | Yash     | Sonawane  | Software E  | 3500000.75 | 2024-10-05 | IT         | Pune      |
+|       4 |  31590 | Vishal   | Kundan    | Auto Engin  |  103000.75 | 2022-09-15 | Civil      | Hyderabad |
+|       4 |  41590 | Samyak   | Kasturkar | Engineer    |  100200.05 | 2022-10-15 | Civil      | Hyderabad |
+|       5 |  31390 | Yash     | Jadhav    | Site Engin  |  104000.75 | 2023-09-15 | Auto Mobil | Nagpur    |
++---------+--------+----------+-----------+-------------+------------+------------+------------+-----------+
+13 rows in set (0.01 sec)
+
+Q2. Find the fname,designation,dlocation,JoinDate.
+mysql> select fname,designation,dlocation,JoinDate from Employee NATURAL JOIN Dept;
++----------+-------------+-----------+------------+
+| fname    | designation | dlocation | JoinDate   |
++----------+-------------+-----------+------------+
+| Shivam   | Manager     | Pune      | 2024-10-15 |
+| Tanmay   | Software E  | Pune      | 2024-12-05 |
+| Jay      | Product Ma  | Pune      | 2024-09-15 |
+| Gautam   | Software E  | Pune      | 2024-05-06 |
+| Shrikant | Software E  | Pune      | 2024-07-10 |
+| Pradnya  | Manager     | Pune      | 2020-10-07 |
+| Ankush   | Manager     | Pune      | 2024-01-15 |
+| Pranjal  | Product Ma  | Pune      | 2020-10-07 |
+| Chanchal | Software E  | Pune      | 2024-10-05 |
+| Yash     | Software E  | Pune      | 2024-10-05 |
+| Vishal   | Auto Engin  | Hyderabad | 2022-09-15 |
+| Samyak   | Engineer    | Hyderabad | 2022-10-15 |
+| Yash     | Site Engin  | Nagpur    | 2023-09-15 |
++----------+-------------+-----------+------------+
+13 rows in set (0.00 sec)
+
+Q3. Find the Employee details,Proj_id,Project cost who does not have Project location as 'Hyderabad'.
+mysql> select d.Dept_id,e.fname,e.designation,d.dlocation,e.JoinDate from Dept d left outer join Employee e on e.Dept_id=d.Dept_id;
++---------+----------+-------------+-----------+------------+
+| Dept_id | fname    | designation | dlocation | JoinDate   |
++---------+----------+-------------+-----------+------------+
+|       1 | Shivam   | Manager     | Pune      | 2024-10-15 |
+|       1 | Tanmay   | Software E  | Pune      | 2024-12-05 |
+|       1 | Jay      | Product Ma  | Pune      | 2024-09-15 |
+|       1 | Shrikant | Software E  | Pune      | 2024-07-10 |
+|       1 | Pradnya  | Manager     | Pune      | 2020-10-07 |
+|       1 | Ankush   | Manager     | Pune      | 2024-01-15 |
+|       2 | Pranjal  | Product Ma  | Pune      | 2020-10-07 |
+|       2 | Chanchal | Software E  | Pune      | 2024-10-05 |
+|       2 | Yash     | Software E  | Pune      | 2024-10-05 |
+|       3 | Gautam   | Software E  | Mumbai    | 2024-05-06 |
+|       4 | Vishal   | Auto Engin  | Hyderabad | 2022-09-15 |
+|       4 | Samyak   | Engineer    | Hyderabad | 2022-10-15 |
+|       5 | Yash     | Site Engin  | Nagpur    | 2023-09-15 |
+|       6 | NULL     | NULL        | NULL      | NULL       |
++---------+----------+-------------+-----------+------------+
+14 rows in set (0.00 sec)
+
+Q4. Find Department Name,employee name,designation for which project year is 2020.
+mysql> select d.dname,e.fname,e.lname,e.designation from Dept d,Employee e inner join Project p where p.Dept_id=e.Dept_id=d.Dept_id and Pyear=2020;
++----------+--------+--------+-------------+
+| dname    | fname  | lname  | designation |
++----------+--------+--------+-------------+
+| Computer | Gautam | Khaire | Software E  |
++----------+--------+--------+-------------+
+1 row in set (0.00 sec)
+
+Q5. Display designation,Dept_id which Project cost is greater than 30000.
+mysql> select distinct(e.designation),e.Dept_id from Employee e inner join Project p where p.Dept_id=e.Dept_id and p.Pcost > 30000;
++-------------+---------+
+| designation | Dept_id |
++-------------+---------+
+| Manager     |       1 |
+| Software E  |       1 |
+| Product Ma  |       1 |
+| Software E  |       3 |
+| Product Ma  |       2 |
+| Software E  |       2 |
++-------------+---------+
+6 rows in set (0.00 sec)
+
+Q6. Find the names of all Projects that started in the year 2015.
+mysql> select Project.Pname from Project left join Dept using(Dept_id) where Pyear=2015;
++---------+
+| Pname   |
++---------+
+| Website |
+| WebApp  |
++---------+
+2 rows in set (0.00 sec)
+
+Q7. List the dname having number of employees are 10.
+mysql> select dname,count(*) as count from Dept natural join Employee group by Dept.Dept_id having count=10;
+Empty set (0.01 sec)
+
+Q8. Display the total number of employee who have joined any project before 2009.
+mysql> select count(*) as count from Employee natural join Project where Employee.Dept_id = Project.Dept_id and Pyear < 2009;
++-------+
+| count |
++-------+
+|     0 |
++-------+
+1 row in set (0.00 sec)
+
+Q9. Create a view showing the employee and Department details.
+mysql> create view Details as select * from Employee join Dept using(Dept_id);
+Query OK, 0 rows affected (0.04 sec)
+mysql> select * from Details;
++---------+--------+----------+-----------+-------------+------------+------------+------------+-----------+
+| Dept_id | Emp_id | fname    | lname     | designation | salary     | JoinDate   | dname      | dlocation |
++---------+--------+----------+-----------+-------------+------------+------------+------------+-----------+
+|       1 |  31307 | Shivam   | Dhonde    | Manager     | 3500000.75 | 2024-10-15 | Computer   | Pune      |
+|       1 |  31309 | Tanmay   | Jadhav    | Software E  |  200200.55 | 2024-12-05 | Computer   | Pune      |
+|       1 |  31315 | Jay      | Mehta     | Product Ma  |  100000.75 | 2024-09-15 | Computer   | Pune      |
+|       1 |  31323 | Gautam   | Khaire    | Software E  |  350000.75 | 2024-05-06 | Computer   | Pune      |
+|       1 |  31324 | Shrikant | Kharat    | Software E  |  250000.75 | 2024-07-10 | Computer   | Pune      |
+|       1 |  31333 | Pradnya  | Kumar     | Manager     |   98129.89 | 2020-10-07 | Computer   | Pune      |
+|       1 |  31337 | Ankush   | Mehta     | Manager     |   50000000 | 2024-01-15 | Computer   | Pune      |
+|       2 |  31335 | Pranjal  | Deasi     | Product Ma  |   90329.89 | 2020-10-07 | IT         | Pune      |
+|       2 |  31980 | Chanchal | Wadhwa    | Software E  | 3000000.75 | 2024-10-05 | IT         | Pune      |
+|       2 |  31981 | Yash     | Sonawane  | Software E  | 3500000.75 | 2024-10-05 | IT         | Pune      |
+|       4 |  31590 | Vishal   | Kundan    | Auto Engin  |  103000.75 | 2022-09-15 | Civil      | Hyderabad |
+|       4 |  41590 | Samyak   | Kasturkar | Engineer    |  100200.05 | 2022-10-15 | Civil      | Hyderabad |
+|       5 |  31390 | Yash     | Jadhav    | Site Engin  |  104000.75 | 2023-09-15 | Auto Mobil | Nagpur    |
++---------+--------+----------+-----------+-------------+------------+------------+------------+-----------+
+13 rows in set (0.00 sec)
+
+Q10. Perfrom Manipulation on simple view-insert,update,delete,drop biew.
+
+CREATION OF SIMPLE VIEW : 
+mysql> create view v3 as select Emp_id,fname,lname,designation from Employee with check option;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from v3;
++--------+----------+-----------+-------------+
+| Emp_id | fname    | lname     | designation |
++--------+----------+-----------+-------------+
+|  31307 | Shivam   | Dhonde    | Manager     |
+|  31309 | Tanmay   | Jadhav    | Software E  |
+|  31315 | Jay      | Mehta     | Product Ma  |
+|  31323 | Gautam   | Khaire    | Software E  |
+|  31324 | Shrikant | Kharat    | Software E  |
+|  31333 | Pradnya  | Kumar     | Manager     |
+|  31335 | Pranjal  | Deasi     | Product Ma  |
+|  31337 | Ankush   | Mehta     | Manager     |
+|  31390 | Yash     | Jadhav    | Site Engin  |
+|  31590 | Vishal   | Kundan    | Auto Engin  |
+|  31980 | Chanchal | Wadhwa    | Software E  |
+|  31981 | Yash     | Sonawane  | Software E  |
+|  41590 | Samyak   | Kasturkar | Engineer    |
++--------+----------+-----------+-------------+
+13 rows in set (0.00 sec)
+
+~INSERT INTO SIMPLE VIEW:
+mysql> insert into Employee values(31302,1,"Arsh","Patne","Manager",100000.89,"2024-10-08");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from v3;
++--------+----------+-----------+-------------+
+| Emp_id | fname    | lname     | designation |
++--------+----------+-----------+-------------+
+|  31302 | Arsh     | Patne     | Manager     |
+|  31307 | Shivam   | Dhonde    | Manager     |
+|  31309 | Tanmay   | Jadhav    | Software E  |
+|  31315 | Jay      | Mehta     | Product Ma  |
+|  31323 | Gautam   | Khaire    | Software E  |
+|  31324 | Shrikant | Kharat    | Software E  |
+|  31333 | Pradnya  | Kumar     | Manager     |
+|  31335 | Pranjal  | Deasi     | Product Ma  |
+|  31337 | Ankush   | Mehta     | Manager     |
+|  31390 | Yash     | Jadhav    | Site Engin  |
+|  31590 | Vishal   | Kundan    | Auto Engin  |
+|  31980 | Chanchal | Wadhwa    | Software E  |
+|  31981 | Yash     | Sonawane  | Software E  |
+|  41590 | Samyak   | Kasturkar | Engineer    |
++--------+----------+-----------+-------------+
+14 rows in set (0.00 sec)
+
+mysql> insert into v3 values(31222,"Atharva","Deshmukh","Manager");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from v3;
++--------+----------+-----------+-------------+
+| Emp_id | fname    | lname     | designation |
++--------+----------+-----------+-------------+
+|  31222 | Atharva  | Deshmukh  | Manager     |
+|  31302 | Arsh     | Patne     | Manager     |
+|  31307 | Shivam   | Dhonde    | Manager     |
+|  31309 | Tanmay   | Jadhav    | Software E  |
+|  31315 | Jay      | Mehta     | Product Ma  |
+|  31323 | Gautam   | Khaire    | Software E  |
+|  31324 | Shrikant | Kharat    | Software E  |
+|  31333 | Pradnya  | Kumar     | Manager     |
+|  31335 | Pranjal  | Deasi     | Product Ma  |
+|  31337 | Ankush   | Mehta     | Manager     |
+|  31390 | Yash     | Jadhav    | Site Engin  |
+|  31590 | Vishal   | Kundan    | Auto Engin  |
+|  31980 | Chanchal | Wadhwa    | Software E  |
+|  31981 | Yash     | Sonawane  | Software E  |
+|  41590 | Samyak   | Kasturkar | Engineer    |
++--------+----------+-----------+-------------+
+15 rows in set (0.00 sec)
+
+~UPDATE INTO SIMPLE VIEW: 
+mysql> update v3 set designation='HOD' where Emp_id = 31302;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from v3;
++--------+----------+-----------+-------------+
+| Emp_id | fname    | lname     | designation |
++--------+----------+-----------+-------------+
+|  31222 | Atharva  | Deshmukh  | Manager     |
+|  31302 | Arsh     | Patne     | HOD         |
+|  31307 | Shivam   | Dhonde    | Manager     |
+|  31309 | Tanmay   | Jadhav    | Software E  |
+|  31315 | Jay      | Mehta     | Product Ma  |
+|  31323 | Gautam   | Khaire    | Software E  |
+|  31324 | Shrikant | Kharat    | Software E  |
+|  31333 | Pradnya  | Kumar     | Manager     |
+|  31335 | Pranjal  | Deasi     | Product Ma  |
+|  31337 | Ankush   | Mehta     | Manager     |
+|  31390 | Yash     | Jadhav    | Site Engin  |
+|  31590 | Vishal   | Kundan    | Auto Engin  |
+|  31980 | Chanchal | Wadhwa    | Software E  |
+|  31981 | Yash     | Sonawane  | Software E  |
+|  41590 | Samyak   | Kasturkar | Engineer    |
++--------+----------+-----------+-------------+
+15 rows in set (0.00 sec)
+
+~DELETE FROM SIMPLE VIEW : 
+mysql> delete from v3 where Emp_id =31302;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from v3;
++--------+----------+-----------+-------------+
+| Emp_id | fname    | lname     | designation |
++--------+----------+-----------+-------------+
+|  31222 | Atharva  | Deshmukh  | Manager     |
+|  31307 | Shivam   | Dhonde    | Manager     |
+|  31309 | Tanmay   | Jadhav    | Software E  |
+|  31315 | Jay      | Mehta     | Product Ma  |
+|  31323 | Gautam   | Khaire    | Software E  |
+|  31324 | Shrikant | Kharat    | Software E  |
+|  31333 | Pradnya  | Kumar     | Manager     |
+|  31335 | Pranjal  | Deasi     | Product Ma  |
+|  31337 | Ankush   | Mehta     | Manager     |
+|  31390 | Yash     | Jadhav    | Site Engin  |
+|  31590 | Vishal   | Kundan    | Auto Engin  |
+|  31980 | Chanchal | Wadhwa    | Software E  |
+|  31981 | Yash     | Sonawane  | Software E  |
+|  41590 | Samyak   | Kasturkar | Engineer    |
++--------+----------+-----------+-------------+
+14 rows in set (0.00 sec)
+
+

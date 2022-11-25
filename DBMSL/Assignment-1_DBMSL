@@ -1,0 +1,584 @@
+(base) student@student-OptiPlex-3020:~/Desktop$ mysql -h 10.10.10.216 -u t31323 -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 200
+Server version: 5.5.43-MariaDB MariaDB Server
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use t31323db;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+mysql> create table Dept(Dept_id int,dname varchar(10),dlocation varchar(20),primary key(Dept_id));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> desc Dept;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Dept_id   | int(11)     | NO   | PRI | 0       |       |
+| dname     | varchar(10) | YES  |     | NULL    |       |
+| dlocation | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+mysql> create table Employee(Emp_id int,Dept_id int,fname varchar(10),lname varchar(10),designation varchar(10),salary double,JoinDate DATE,primary key(Emp_id),foreign key(Dept_id) references Dept(Dept_id) on delete cascade);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc Employee;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Emp_id      | int(11)     | NO   | PRI | 0       |       |
+| Dept_id     | int(11)     | YES  | MUL | NULL    |       |
+| fname       | varchar(10) | YES  |     | NULL    |       |
+| lname       | varchar(10) | YES  |     | NULL    |       |
+| designation | varchar(10) | YES  |     | NULL    |       |
+| salary      | double      | YES  |     | NULL    |       |
+| JoinDate    | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+mysql> create table Project
+    -> (
+    -> Proj_id int,
+    -> Dept_id int,
+    -> Pname varchar(10),
+    -> Plocation varchar(10),
+    -> Pcost double,
+    -> Pyear YEAR,
+    -> primary key(Proj_id),
+    -> foreign key(Dept_id) references Dept(Dept_id) on delete cascade
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc Project;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Proj_id   | int(11)     | NO   | PRI | 0       |       |
+| Dept_id   | int(11)     | YES  | MUL | NULL    |       |
+| Pname     | varchar(10) | YES  |     | NULL    |       |
+| Plocation | varchar(10) | YES  |     | NULL    |       |
+| Pcost     | double      | YES  |     | NULL    |       |
+| Pyear     | year(4)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_t31323db |
++--------------------+
+| Dept               |
+| Employee           |
+| Project            |
++--------------------+
+3 rows in set (0.00 sec)
+
+
+mysql> insert into Dept values(1,'Computer','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Dept values(2,'IT','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Dept values(3,'ENTC','Mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Dept values(4,'Civil','Nagpur');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Dept values(5,'Auto Mobile','Nagpur');
+Query OK, 1 row affected, 1 warning (0.02 sec)
+
+mysql> select * from Dept;
++---------+------------+-----------+
+| Dept_id | dname      | dlocation |
++---------+------------+-----------+
+|       1 | Computer   | Pune      |
+|       2 | IT         | Pune      |
+|       3 | ENTC       | Mumbai    |
+|       4 | Civil      | Nagpur    |
+|       5 | Auto Mobil | Nagpur    |
++---------+------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into Employee values(31323,1,'Gautam','Khaire','Software Engineer',350000.75,2024-05-06);
+Query OK, 1 row affected, 2 warnings (0.00 sec)
+
+mysql> insert into Employee values(31323,1,'Shrikant','Kharat','Software Engineer',250000.75,2024-07-10);
+ERROR 1062 (23000): Duplicate entry '31323' for key 'PRIMARY'
+mysql> insert into Employee values(31324,1,'Shrikant','Kharat','Software Engineer',250000.75,2024-07-10);
+Query OK, 1 row affected, 2 warnings (0.01 sec)
+
+mysql> insert into Employee values(31980,2,'Chanchal','Wadhwa','Software Engineer',3000000.75,2024-10-5);
+Query OK, 1 row affected, 2 warnings (0.02 sec)
+
+mysql> insert into Employee values(31981,2,'Yash','Sonawane','Software Engineer',3500000.75,2024-10-5);
+Query OK, 1 row affected, 2 warnings (0.02 sec)
+
+mysql> select * from Employee;
++--------+---------+----------+----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname    | designation | salary     | JoinDate   |
++--------+---------+----------+----------+-------------+------------+------------+
+|  31323 |       1 | Gautam   | Khaire   | Software E  |  350000.75 | 0000-00-00 |
+|  31324 |       1 | Shrikant | Kharat   | Software E  |  250000.75 | 0000-00-00 |
+|  31980 |       2 | Chanchal | Wadhwa   | Software E  | 3000000.75 | 0000-00-00 |
+|  31981 |       2 | Yash     | Sonawane | Software E  | 3500000.75 | 0000-00-00 |
++--------+---------+----------+----------+-------------+------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into Employee values(31307,1,'Shivam','Dhonde','Manager',3500000.75,'2024-10-15');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from Employee;
++--------+---------+----------+----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname    | designation | salary     | JoinDate   |
++--------+---------+----------+----------+-------------+------------+------------+
+|  31307 |       1 | Shivam   | Dhonde   | Manager     | 3500000.75 | 2024-10-15 |
+|  31323 |       1 | Gautam   | Khaire   | Software E  |  350000.75 | 0000-00-00 |
+|  31324 |       1 | Shrikant | Kharat   | Software E  |  250000.75 | 0000-00-00 |
+|  31980 |       2 | Chanchal | Wadhwa   | Software E  | 3000000.75 | 0000-00-00 |
+|  31981 |       2 | Yash     | Sonawane | Software E  | 3500000.75 | 0000-00-00 |
++--------+---------+----------+----------+-------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update Employee set JoinDate='2024-05-06' where Emp_id=31323;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Employee;
++--------+---------+----------+----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname    | designation | salary     | JoinDate   |
++--------+---------+----------+----------+-------------+------------+------------+
+|  31307 |       1 | Shivam   | Dhonde   | Manager     | 3500000.75 | 2024-10-15 |
+|  31323 |       1 | Gautam   | Khaire   | Software E  |  350000.75 | 2024-05-06 |
+|  31324 |       1 | Shrikant | Kharat   | Software E  |  250000.75 | 0000-00-00 |
+|  31980 |       2 | Chanchal | Wadhwa   | Software E  | 3000000.75 | 0000-00-00 |
+|  31981 |       2 | Yash     | Sonawane | Software E  | 3500000.75 | 0000-00-00 |
++--------+---------+----------+----------+-------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update Employee set JoinDate='2024-10-06' where Emp_id=31324;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set JoinDate='2024-12-9' where Emp_id=31980;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set JoinDate='2024-12-9' where Emp_id=31981;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Employee;
++--------+---------+----------+----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname    | designation | salary     | JoinDate   |
++--------+---------+----------+----------+-------------+------------+------------+
+|  31307 |       1 | Shivam   | Dhonde   | Manager     | 3500000.75 | 2024-10-15 |
+|  31323 |       1 | Gautam   | Khaire   | Software E  |  350000.75 | 2024-05-06 |
+|  31324 |       1 | Shrikant | Kharat   | Software E  |  250000.75 | 2024-10-06 |
+|  31980 |       2 | Chanchal | Wadhwa   | Software E  | 3000000.75 | 2024-12-09 |
+|  31981 |       2 | Yash     | Sonawane | Software E  | 3500000.75 | 2024-12-09 |
++--------+---------+----------+----------+-------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into Employee values(31337,1,'Ankush','Mehta','Manager',2500000.75,'2024-1-15');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Employee values(31315,1,'Jay','Mehta','Product Manager',100000.75,'2024-9-15');
+Query OK, 1 row affected, 1 warning (0.03 sec)
+
+mysql> insert into Employee values(31390,5,'Yash','Jadhav','Site Engineer',104000.75,'2023-9-15');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> insert into Employee values(31590,4,'Vishal','Kundan','Auto Engineer',103000.75,'2022-9-15');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> select * from Employee;
++--------+---------+----------+----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname    | designation | salary     | JoinDate   |
++--------+---------+----------+----------+-------------+------------+------------+
+|  31307 |       1 | Shivam   | Dhonde   | Manager     | 3500000.75 | 2024-10-15 |
+|  31315 |       1 | Jay      | Mehta    | Product Ma  |  100000.75 | 2024-09-15 |
+|  31323 |       1 | Gautam   | Khaire   | Software E  |  350000.75 | 2024-05-06 |
+|  31324 |       1 | Shrikant | Kharat   | Software E  |  250000.75 | 2024-10-06 |
+|  31337 |       1 | Ankush   | Mehta    | Manager     | 2500000.75 | 2024-01-15 |
+|  31390 |       5 | Yash     | Jadhav   | Site Engin  |  104000.75 | 2023-09-15 |
+|  31590 |       4 | Vishal   | Kundan   | Auto Engin  |  103000.75 | 2022-09-15 |
+|  31980 |       2 | Chanchal | Wadhwa   | Software E  | 3000000.75 | 2024-12-09 |
+|  31981 |       2 | Yash     | Sonawane | Software E  | 3500000.75 | 2024-12-09 |
++--------+---------+----------+----------+-------------+------------+------------+
+9 rows in set (0.00 sec)
+
+mysql> insert into Employee values(41590,4,'Samyak','Kasturkar','Engineer',100200.05,'2022-10-15');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into Employee values(31309,1,'Tanmay','Jadhav','Software Engineer',200200.55,'2024-12-05');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> select * from Employee;
++--------+---------+----------+-----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname     | designation | salary     | JoinDate   |
++--------+---------+----------+-----------+-------------+------------+------------+
+|  31307 |       1 | Shivam   | Dhonde    | Manager     | 3500000.75 | 2024-10-15 |
+|  31309 |       1 | Tanmay   | Jadhav    | Software E  |  200200.55 | 2024-12-05 |
+|  31315 |       1 | Jay      | Mehta     | Product Ma  |  100000.75 | 2024-09-15 |
+|  31323 |       1 | Gautam   | Khaire    | Software E  |  350000.75 | 2024-05-06 |
+|  31324 |       1 | Shrikant | Kharat    | Software E  |  250000.75 | 2024-10-06 |
+|  31337 |       1 | Ankush   | Mehta     | Manager     | 2500000.75 | 2024-01-15 |
+|  31390 |       5 | Yash     | Jadhav    | Site Engin  |  104000.75 | 2023-09-15 |
+|  31590 |       4 | Vishal   | Kundan    | Auto Engin  |  103000.75 | 2022-09-15 |
+|  31980 |       2 | Chanchal | Wadhwa    | Software E  | 3000000.75 | 2024-12-09 |
+|  31981 |       2 | Yash     | Sonawane  | Software E  | 3500000.75 | 2024-12-09 |
+|  41590 |       4 | Samyak   | Kasturkar | Engineer    |  100200.05 | 2022-10-15 |
++--------+---------+----------+-----------+-------------+------------+------------+
+11 rows in set (0.00 sec)
+
+mysql> insert into Project values(1,1,'Mobile App','Pune',1902198.90,2024);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Project values(2,1,'Blockchain','Mumbai',9800098.50,2022);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Project values(3,3,'Building','Mumbai',200000,2022);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> update Project set Pcost=300000 where Proj_id=400000;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> update Project set Pcost=300000 where Proj_id=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set salary=50000000 where Emp_id=31337;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Project set Pcost=500000 where Proj_id=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Project;
++---------+---------+------------+-----------+--------+-------+
+| Proj_id | Dept_id | Pname      | Plocation | Pcost  | Pyear |
++---------+---------+------------+-----------+--------+-------+
+|       1 |       1 | Mobile App | Pune      | 300000 |  2024 |
+|       2 |       1 | Blockchain | Mumbai    | 500000 |  2022 |
+|       3 |       3 | Building   | Mumbai    | 200000 |  2022 |
++---------+---------+------------+-----------+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Dept;
++---------+------------+-----------+
+| Dept_id | dname      | dlocation |
++---------+------------+-----------+
+|       1 | Computer   | Pune      |
+|       2 | IT         | Pune      |
+|       3 | ENTC       | Mumbai    |
+|       4 | Civil      | Nagpur    |
+|       5 | Auto Mobil | Nagpur    |
++---------+------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from Employee;
++--------+---------+----------+-----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname     | designation | salary     | JoinDate   |
++--------+---------+----------+-----------+-------------+------------+------------+
+|  31307 |       1 | Shivam   | Dhonde    | Manager     | 3500000.75 | 2024-10-15 |
+|  31309 |       1 | Tanmay   | Jadhav    | Software E  |  200200.55 | 2024-12-05 |
+|  31315 |       1 | Jay      | Mehta     | Product Ma  |  100000.75 | 2024-09-15 |
+|  31323 |       1 | Gautam   | Khaire    | Software E  |  350000.75 | 2024-05-06 |
+|  31324 |       1 | Shrikant | Kharat    | Software E  |  250000.75 | 2024-10-06 |
+|  31337 |       1 | Ankush   | Mehta     | Manager     |   50000000 | 2024-01-15 |
+|  31390 |       5 | Yash     | Jadhav    | Site Engin  |  104000.75 | 2023-09-15 |
+|  31590 |       4 | Vishal   | Kundan    | Auto Engin  |  103000.75 | 2022-09-15 |
+|  31980 |       2 | Chanchal | Wadhwa    | Software E  | 3000000.75 | 2024-12-09 |
+|  31981 |       2 | Yash     | Sonawane  | Software E  | 3500000.75 | 2024-12-09 |
+|  41590 |       4 | Samyak   | Kasturkar | Engineer    |  100200.05 | 2022-10-15 |
++--------+---------+----------+-----------+-------------+------------+------------+
+11 rows in set (0.01 sec)
+mysql> insert into Employee values(31333,1,'Pradnya','Kumar','Manager',98129.89,2024-10-07);
+Query OK, 1 row affected, 1 warning (0.02 sec)
+
+mysql> insert into Employee values(31335,2,'Pranjal','Deasi','Product Manager',90329.89,2024-10-07);
+Query OK, 1 row affected, 2 warnings (0.02 sec)
+mysql> update Employee set JoinDate='2020-10-07' where fname like 'P%';
+Query OK, 2 rows affected (0.02 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+Assignment No. 2B Queries :-
+
+Q2. Display all Employee details with Department 'Computer' and 'IT' and Employee first name starting with 'p' or 'h'.
+
+mysql> select * from Employee where Dept_id in (1,2) and fname like 'P%' or fname like 'H%';
++--------+---------+---------+-------+-------------+----------+------------+
+| Emp_id | Dept_id | fname   | lname | designation | salary   | JoinDate   |
++--------+---------+---------+-------+-------------+----------+------------+
+|  31333 |       1 | Pradnya | Kumar | Manager     | 98129.89 | 2020-10-07 |
+|  31335 |       2 | Pranjal | Deasi | Product Ma  | 90329.89 | 2020-10-07 |
++--------+---------+---------+-------+-------------+----------+------------+
+2 rows in set (0.00 sec)
+
+Q3. Lists the number of different Employee Positions.
+
+mysql> select distinct designation from Employee;
++-------------+
+| designation |
++-------------+
+| Manager     |
+| Software E  |
+| Product Ma  |
+| Site Engin  |
+| Auto Engin  |
+| Engineer    |
++-------------+
+6 rows in set (0.00 sec)
+mysql> select COUNT(designation) from Employee;
++--------------------+
+| COUNT(designation) |
++--------------------+
+|                 13 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select COUNT(distinct designation) from Employee;
++-----------------------------+
+| COUNT(distinct designation) |
++-----------------------------+
+|                           6 |
++-----------------------------+
+1 row in set (0.00 sec)
+
+
+Q4. Give 10% increase in Salary of the Employee whose joinDate before 2015.
+
+mysql> update Employee set JoinDate='2013-10-07' where Emp_id=31335;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+mysql> select 1.1*salary from Employee where JoinDate<='2015-01-01';
++------------+
+| 1.1*salary |
++------------+
+|  99362.879 |
++------------+
+1 row in set (0.00 sec)
+mysql> update Employee set salary=1.1*salary WHERE JoinDate<='2015-01-01';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+mysql> select * from Employee WHERE JoinDate<='2015-01-01';
++--------+---------+---------+-------+-------------+-----------+------------+
+| Emp_id | Dept_id | fname   | lname | designation | salary    | JoinDate   |
++--------+---------+---------+-------+-------------+-----------+------------+
+|  31335 |       2 | Pranjal | Deasi | Product Ma  | 99362.879 | 2013-10-07 |
++--------+---------+---------+-------+-------------+-----------+------------+
+1 row in set (0.00 sec)
+
+
+Q6. Find the names of Projects with location 'Pune'.
+
+mysql> select Pname from Project where Plocation='Pune';
++------------+
+| Pname      |
++------------+
+| Mobile App |
++------------+
+1 row in set (0.00 sec)
+
+Q7. Find the project having cost in between 100000 to 500000.
+
+mysql> select Pcost from Project where Pcost Between 100000 AND 500000;
++--------+
+| Pcost  |
++--------+
+| 300000 |
+| 500000 |
+| 200000 |
++--------+
+3 rows in set (0.00 sec)
+
+Q8. Find the project having maximum price and find average Project cost.
+
+mysql> select MAX(Pcost) from Project;
++------------+
+| MAX(Pcost) |
++------------+
+|     500000 |
++------------+
+1 row in set (0.00 sec)
+mysql> select Pcost from Project ORDER BY Pcost DESC;
++--------+
+| Pcost  |
++--------+
+| 500000 |
+| 300000 |
+| 200000 |
++--------+
+3 rows in set (0.00 sec)
+
+mysql> select AVG(Pcost) from Project;
++-------------------+
+| AVG(Pcost)        |
++-------------------+
+| 333333.3333333333 |
++-------------------+
+1 row in set (0.00 sec)
+
+Q9. Display all employees with Emp_id and Emp name in descending order.
+
+mysql> select Emp_id,fname,lname from Employee ORDER BY Emp_id desc;
++--------+----------+-----------+
+| Emp_id | fname    | lname     |
++--------+----------+-----------+
+|  41590 | Samyak   | Kasturkar |
+|  31981 | Yash     | Sonawane  |
+|  31980 | Chanchal | Wadhwa    |
+|  31590 | Vishal   | Kundan    |
+|  31390 | Yash     | Jadhav    |
+|  31337 | Ankush   | Mehta     |
+|  31335 | Pranjal  | Deasi     |
+|  31333 | Pradnya  | Kumar     |
+|  31324 | Shrikant | Kharat    |
+|  31323 | Gautam   | Khaire    |
+|  31315 | Jay      | Mehta     |
+|  31309 | Tanmay   | Jadhav    |
+|  31307 | Shivam   | Dhonde    |
++--------+----------+-----------+
+13 rows in set (0.09 sec)
+
+
+Q10. Display Proj_name,Plocation,Pcost of all project started in 2004,2005,2007.
+
+mysql> select Pname,Plocation,Pcost from Project WHERE Pyear=2004 OR Pyear=2005 OR Pyear=2007;
+Empty set (0.00 sec)
+mysql> select Pname,Plocation,Pcost from Project WHERE Pyear=2004 OR Pyear=2005 OR Pyear=2007 OR Pyear=2022;
++------------+-----------+--------+
+| Pname      | Plocation | Pcost  |
++------------+-----------+--------+
+| Blockchain | Mumbai    | 500000 |
+| Building   | Mumbai    | 200000 |
++------------+-----------+--------+
+2 rows in set (0.00 sec)
+
+Q5. Delete all the department details having location as 'Mumbai'.
+
+mysql> select * from Dept;
++---------+------------+-----------+
+| Dept_id | dname      | dlocation |
++---------+------------+-----------+
+|       1 | Computer   | Pune      |
+|       2 | IT         | Pune      |
+|       3 | ENTC       | Mumbai    |
+|       4 | Civil      | Nagpur    |
+|       5 | Auto Mobil | Nagpur    |
++---------+------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> delete from Dept where dlocation='Mumbai';
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from Dept;
++---------+------------+-----------+
+| Dept_id | dname      | dlocation |
++---------+------------+-----------+
+|       1 | Computer   | Pune      |
+|       2 | IT         | Pune      |
+|       4 | Civil      | Nagpur    |
+|       5 | Auto Mobil | Nagpur    |
++---------+------------+-----------+
+4 rows in set (0.00 sec)
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> create view v1 as select fname,lname,designation from Employee;
+
+mysql> select * from v1;
++----------+-----------+-------------+
+| fname    | lname     | designation |
++----------+-----------+-------------+
+| Shivam   | Dhonde    | Manager     |
+| Tanmay   | Jadhav    | Software E  |
+| Jay      | Mehta     | Product Ma  |
+| Gautam   | Khaire    | Software E  |
+| Shrikant | Kharat    | Software E  |
+| Pradnya  | Kumar     | Manager     |
+| Pranjal  | Deasi     | Product Ma  |
+| Ankush   | Mehta     | Manager     |
+| Yash     | Jadhav    | Site Engin  |
+| Vishal   | Kundan    | Auto Engin  |
+| Chanchal | Wadhwa    | Software E  |
+| Yash     | Sonawane  | Software E  |
+| Samyak   | Kasturkar | Engineer    |
++----------+-----------+-------------+
+13 rows in set (0.00 sec)
+
+mysql> create view v2 as select d.dname,p.Pname,p.Pcost from Dept d,Project p where d.Dept_id=1;
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> select * from v2;
++----------+------------+--------+
+| dname    | Pname      | Pcost  |
++----------+------------+--------+
+| Computer | Mobile App | 300000 |
+| Computer | Blockchain | 500000 |
+| Computer | Building   | 200000 |
++----------+------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> create index Pname_index on Project(Pname);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create index Proj_id on Project(Pname,Pcost);
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create unique index uniProj_id on Project(Pname);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show index from Project;
++---------+------------+-------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Table   | Non_unique | Key_name    | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
++---------+------------+-------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Project |          0 | PRIMARY     |            1 | Proj_id     | A         |           3 |     NULL | NULL   |      | BTREE      |         |               |
+| Project |          0 | uniProj_id  |            1 | Pname       | A         |           3 |     NULL | NULL   | YES  | BTREE      |         |               |
+| Project |          1 | Dept_id     |            1 | Dept_id     | A         |           3 |     NULL | NULL   | YES  | BTREE      |         |               |
+| Project |          1 | Pname_index |            1 | Pname       | A         |           3 |     NULL | NULL   | YES  | BTREE      |         |               |
+| Project |          1 | Proj_id     |            1 | Pname       | A         |           3 |     NULL | NULL   | YES  | BTREE      |         |               |
+| Project |          1 | Proj_id     |            2 | Pcost       | A         |           3 |     NULL | NULL   | YES  | BTREE      |         |               |
++---------+------------+-------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> create table L3(
+    -> rollNo int NOT NULL AUTO_INCREMENT,
+    -> PRIMARY KEY(rollNo),
+    -> name varchar(10),
+    -> cgpa double,
+    -> address varchar(10)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into L3(name,cgpa,address) VALUES ('Gautam',9.77,'Hadapsar'),('Siddesh',9.73,'PICT Hostel'),('Ankush','9.95','PICT');
+Query OK, 3 rows affected, 1 warning (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 1
+
+mysql> select * from L3;
++--------+---------+------+------------+
+| rollNo | name    | cgpa | address    |
++--------+---------+------+------------+
+|      1 | Gautam  | 9.77 | Hadapsar   |
+|      2 | Siddesh | 9.73 | PICT Hoste |
+|      3 | Ankush  | 9.95 | PICT       |
++--------+---------+------+------------+
+3 rows in set (0.00 sec)
+
+

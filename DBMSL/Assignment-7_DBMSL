@@ -1,0 +1,154 @@
+mysql> CREATE TABLE Library(
+    -> BookID int,
+    -> BookName varchar(50),
+    -> StudentID int,
+    -> IssueDate date
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> select * from Library;
+Empty set (0.00 sec)
+
+mysql> CREATE TABLE LibraryAudit(
+    -> BookID int,
+    -> BookName varchar(50),
+    -> StudentID int,
+    -> IssueDate date
+    -> );
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> select * from LibraryAudit;
+Empty set (0.00 sec)
+
+mysql> insert into Library (BookID,BookName,StudentID,IssueDate) values (1,"You Can",31323,"2022-09-10"),(2,"Wings of Fire",31324,"2022-09-12");
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into Library (BookID,BookName,StudentID,IssueDate) values (3,"SPOS",31324,"2022-08-1"),(4,"DBMS",31325,"2022-07-15");
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into Library (BookID,BookName,StudentID,IssueDate) values (5,"TOC",31327,"2022-08-15"),(6,"DBMS",31328,"2022-05-12");
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into Library (BookID,BookName,StudentID,IssueDate) values (7,"CN",31323,"2022-09-15"),(8,"DS",31329,"2022-06-2");
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from Library;
++--------+---------------+-----------+------------+
+| BookID | BookName      | StudentID | IssueDate  |
++--------+---------------+-----------+------------+
+|      1 | You Can       |     31323 | 2022-09-10 |
+|      2 | Wings Of Fire |     31324 | 2022-09-12 |
+|      3 | SPOS          |     31324 | 2022-08-01 |
+|      4 | DBMS          |     31325 | 2022-07-15 |
+|      5 | TOC           |     31327 | 2022-08-15 |
+|      6 | DBMS          |     31328 | 2022-05-12 |
+|      7 | CN            |     31323 | 2022-09-15 |
+|      8 | DS            |     31329 | 2022-06-02 |
++--------+---------------+-----------+------------+
+8 rows in set (0.01 sec)
+
+mysql> DELIMITER @
+
+mysql> create trigger beforeUpdate
+    -> before update on Library
+    -> for each row
+    -> begin
+    -> insert into LibraryAudit values(old.BookID,old.BookName,old.StudentID,old.IssueDate);
+    -> end;
+    -> @
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create trigger afterUpdate
+    -> after update on Library
+    -> for each row
+    -> begin
+    -> insert into LibraryAudit values(old.BookID,old.BookName,old.StudentID,old.IssueDate);
+    -> end;
+    -> @
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> create trigger beforeDelete
+    -> before delete on Library
+    -> for each row
+    -> begin
+    -> insert into LibraryAudit values(old.BookID,old.BookName,old.StudentID,old.IssueDate);
+    -> end;
+    -> @
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create trigger afterDelete
+    -> after delete on Library
+    -> for each row
+    -> begin
+    -> insert into LibraryAudit values(old.BookID,old.BookName,old.StudentID,old.IssueDate);
+    -> end;
+    -> @
+Query OK, 0 rows affected (0.07 sec)
+
+
+mysql> DELIMITER ;
+
+mysql> delete from Library where BookID=7;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> update Library set BookName="CN" where BookID=5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Library;
++--------+---------------+-----------+------------+
+| BookID | BookName      | StudentID | IssueDate  |
++--------+---------------+-----------+------------+
+|      1 | You Can       |     31323 | 2022-09-10 |
+|      2 | Wings Of Fire |     31324 | 2022-09-12 |
+|      3 | SPOS          |     31324 | 2022-08-01 |
+|      4 | DBMS          |     31325 | 2022-07-15 |
+|      5 | CN            |     31327 | 2022-08-15 |
+|      6 | DBMS          |     31328 | 2022-05-12 |
++--------+---------------+-----------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from LibraryAudit@
++--------+----------+-----------+------------+
+| BookID | BookName | StudentID | IssueDate  |
++--------+----------+-----------+------------+
+|      7 | CN       |     31323 | 2022-09-15 |
+|      5 | TOC      |     31327 | 2022-08-15 |
++--------+----------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> delete from Library where BookID=5;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> delete from Library where BookID=3;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> drop trigger beforeDelete;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from Library;
++--------+---------------+-----------+------------+
+| BookID | BookName      | StudentID | IssueDate  |
++--------+---------------+-----------+------------+
+|      1 | You Can       |     31323 | 2022-09-10 |
+|      2 | Wings Of Fire |     31324 | 2022-09-12 |
+|      4 | DBMS          |     31325 | 2022-07-15 |
+|      6 | DBMS          |     31328 | 2022-05-12 |
++--------+---------------+-----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from LibraryAudit;
++--------+----------+-----------+------------+
+| BookID | BookName | StudentID | IssueDate  |
++--------+----------+-----------+------------+
+|      7 | CN       |     31323 | 2022-09-15 |
+|      5 | TOC      |     31327 | 2022-08-15 |
+|      5 | CN       |     31327 | 2022-08-15 |
+|      3 | SPOS     |     31324 | 2022-08-01 |
++--------+----------+-----------+------------+
+8 rows in set (0.00 sec)
+

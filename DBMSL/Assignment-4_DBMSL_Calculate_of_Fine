@@ -1,0 +1,136 @@
+mysql> create table Borrower(
+    -> Roll_no int,
+    -> Name varchar(20),
+    -> Date_of_Issue DATE,
+    -> Name_of_Book varchar(20),
+    -> status varchar(10)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> select * from Borrower;
+Empty set (0.00 sec)
+
+mysql> create table Fine(
+    -> Roll_no int,
+    -> Date DATE,
+    -> Amount int
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> select * from Fine;
+Empty set (0.00 sec)
+
+mysql> DELIMITER @
+mysql> CREATE PROCEDURE calculationOfFine(in rollNo int,in bookName varchar(20))
+    -> BEGIN
+    -> DECLARE IssueDate DATE;
+    -> DECLARE days int;
+    -> SELECT Date_of_Issue into IssueDate FROM Borrower WHERE Roll_no=rollNo and Name_of_Book=bookName;
+    -> SELECT DATEDIFF(curdate(),IssueDate) into days;
+    -> If days>=15 and days<=30 THEN
+    -> insert into Fine values(rollNo,curdate(),((days-15)*5));
+    -> elseif days>30 then
+    -> insert into Fine values(rollNo,curdate(),((days-30)*50));
+    -> else
+    -> insert into Fine values(rollNo,curdate(),0);
+    -> END IF;
+    -> UPDATE Borrower set status="R" where Roll_no=rollNo;
+    -> END;
+    -> @    
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DELIMITER ;
+
+mysql> select * from Borrower;
++---------+--------------+---------------+----------------------+--------+
+| Roll_no | Name         | Date_of_Issue | Name_of_Book         | status |
++---------+--------------+---------------+----------------------+--------+
+|   31323 | Gautam       | 2022-08-10    | Operating System     | I      |
+|   31324 | Shrikant     | 2022-08-06    | Database Management  | I      |
+|   31326 | Siddhesh     | 2022-07-16    | Computer Networks    | I      |
+|   31327 | Om           | 2022-07-25    | Theroy of Computatio | I      |
+|   31328 | Nikita       | 2022-08-22    | Distributed System   | I      |
+|   31329 | Sanhita      | 2022-06-01    | Database Management  | I      |
+|   31330 | Manav        | 2022-07-15    | Operating System     | I      |
+|   31331 | Sangameshwar | 2022-08-15    | Distributed System   | I      |
+|   31332 | Prerna       | 2022-05-15    | Operating System     | I      |
+|   31333 | Kareena      | 2022-05-02    | Operating System     | I      |
+|   31337 | Ankush       | 2022-04-12    | Distributed System   | I      |
+|   31338 | Shivanjali   | 2022-07-20    | Database Management  | I      |
+|   31339 | Aditi        | 2022-07-08    | Database Management  | I      |
++---------+--------------+---------------+----------------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from Fine;
+Empty set (0.00 sec)
+
+mysql> CALL calculationOfFine(31323,"Operating System");
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from Fine;
++---------+------------+--------+
+| Roll_no | Date       | Amount |
++---------+------------+--------+
+|   31323 | 2022-09-02 |     40 |
++---------+------------+--------+
+1 row in set (0.00 sec)
+
+mysql> CALL calculationOfFine(31333,"Operating System");
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> select * from Fine;
++---------+------------+--------+
+| Roll_no | Date       | Amount |
++---------+------------+--------+
+|   31323 | 2022-09-02 |     40 |
+|   31333 | 2022-09-02 |   4650 |
++---------+------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> CALL calculationOfFine(31337,"Distributed System");
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from Fine;
++---------+------------+--------+
+| Roll_no | Date       | Amount |
++---------+------------+--------+
+|   31323 | 2022-09-02 |     40 |
+|   31333 | 2022-09-02 |   4650 |
+|   31337 | 2022-09-02 |   5650 |
++---------+------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> CALL calculationOfFine(31339,"Database Management System");
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> select * from Fine;
++---------+------------+--------+
+| Roll_no | Date       | Amount |
++---------+------------+--------+
+|   31323 | 2022-09-02 |     40 |
+|   31333 | 2022-09-02 |   4650 |
+|   31337 | 2022-09-02 |   5650 |
+|   31339 | 2022-09-02 |   1300 |
++---------+------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from Borrower;
++---------+--------------+---------------+----------------------+--------+
+| Roll_no | Name         | Date_of_Issue | Name_of_Book         | status |
++---------+--------------+---------------+----------------------+--------+
+|   31323 | Gautam       | 2022-08-10    | Operating System     | R      |
+|   31324 | Shrikant     | 2022-08-06    | Database Management  | I      |
+|   31326 | Siddhesh     | 2022-07-16    | Computer Networks    | I      |
+|   31327 | Om           | 2022-07-25    | Theroy of Computatio | I      |
+|   31328 | Nikita       | 2022-08-22    | Distributed System   | I      |
+|   31329 | Sanhita      | 2022-06-01    | Database Management  | I      |
+|   31330 | Manav        | 2022-07-15    | Operating System     | I      |
+|   31331 | Sangameshwar | 2022-08-15    | Distributed System   | I      |
+|   31332 | Prerna       | 2022-05-15    | Operating System     | I      |
+|   31333 | Kareena      | 2022-05-02    | Operating System     | R      |
+|   31337 | Ankush       | 2022-04-12    | Distributed System   | R      |
+|   31338 | Shivanjali   | 2022-07-20    | Database Management  | I      |
+|   31339 | Aditi        | 2022-07-08    | Database Management  | R      |
++---------+--------------+---------------+----------------------+--------+
+13 rows in set (0.00 sec)
+    

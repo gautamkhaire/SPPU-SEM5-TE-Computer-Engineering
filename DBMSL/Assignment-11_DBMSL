@@ -1,0 +1,157 @@
+> for(var i=31301,m=10;i<=31386;i++,m++){ db.studentData.insert({id:i,marks:m,age:22}); }
+WriteResult({ "nInserted" : 1 })
+> db.studentData.find();
+{ "_id" : ObjectId("635b5e2e130c18c36c6602b7"), "id" : 31301, "marks" : 10, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602b8"), "id" : 31302, "marks" : 11, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602b9"), "id" : 31303, "marks" : 12, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602ba"), "id" : 31304, "marks" : 13, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602bb"), "id" : 31305, "marks" : 14, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602bc"), "id" : 31306, "marks" : 15, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602bd"), "id" : 31307, "marks" : 16, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602be"), "id" : 31308, "marks" : 17, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602bf"), "id" : 31309, "marks" : 18, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c0"), "id" : 31310, "marks" : 19, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c1"), "id" : 31311, "marks" : 20, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c2"), "id" : 31312, "marks" : 21, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c3"), "id" : 31313, "marks" : 22, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c4"), "id" : 31314, "marks" : 23, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c5"), "id" : 31315, "marks" : 24, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c6"), "id" : 31316, "marks" : 25, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c7"), "id" : 31317, "marks" : 26, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c8"), "id" : 31318, "marks" : 27, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c9"), "id" : 31319, "marks" : 28, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602ca"), "id" : 31320, "marks" : 29, "age" : 22 }
+Type "it" for more
+> it
+{ "_id" : ObjectId("635b5e2e130c18c36c6602cb"), "id" : 31321, "marks" : 30, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602cc"), "id" : 31322, "marks" : 31, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602cd"), "id" : 31323, "marks" : 32, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602ce"), "id" : 31324, "marks" : 33, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602cf"), "id" : 31325, "marks" : 34, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d0"), "id" : 31326, "marks" : 35, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d1"), "id" : 31327, "marks" : 36, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d2"), "id" : 31328, "marks" : 37, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d3"), "id" : 31329, "marks" : 38, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d4"), "id" : 31330, "marks" : 39, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d5"), "id" : 31331, "marks" : 40, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d6"), "id" : 31332, "marks" : 41, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d7"), "id" : 31333, "marks" : 42, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d8"), "id" : 31334, "marks" : 43, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d9"), "id" : 31335, "marks" : 44, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602da"), "id" : 31336, "marks" : 45, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602db"), "id" : 31337, "marks" : 46, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602dc"), "id" : 31338, "marks" : 47, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602dd"), "id" : 31339, "marks" : 48, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602de"), "id" : 31340, "marks" : 49, "age" : 22 }
+Type "it" for more
+> it
+{ "_id" : ObjectId("635b5e2e130c18c36c6602df"), "id" : 31341, "marks" : 50, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602e0"), "id" : 31342, "marks" : 51, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602e1"), "id" : 31343, "marks" : 52, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602e2"), "id" : 31344, "marks" : 53, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602e3"), "id" : 31345, "marks" : 54, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602e4"), "id" : 31346, "marks" : 55, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602e5"), "id" : 31347, "marks" : 56, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602e6"), "id" : 31348, "marks" : 57, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602e7"), "id" : 31349, "marks" : 58, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602e8"), "id" : 31350, "marks" : 59, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602e9"), "id" : 31351, "marks" : 60, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602ea"), "id" : 31352, "marks" : 61, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602eb"), "id" : 31353, "marks" : 62, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602ec"), "id" : 31354, "marks" : 63, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602ed"), "id" : 31355, "marks" : 64, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602ee"), "id" : 31356, "marks" : 65, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602ef"), "id" : 31357, "marks" : 66, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602f0"), "id" : 31358, "marks" : 67, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602f1"), "id" : 31359, "marks" : 68, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602f2"), "id" : 31360, "marks" : 69, "age" : 22 }
+Type "it" for more
+> it
+{ "_id" : ObjectId("635b5e2e130c18c36c6602f3"), "id" : 31361, "marks" : 70, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602f4"), "id" : 31362, "marks" : 71, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602f5"), "id" : 31363, "marks" : 72, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602f6"), "id" : 31364, "marks" : 73, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602f7"), "id" : 31365, "marks" : 74, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602f8"), "id" : 31366, "marks" : 75, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602f9"), "id" : 31367, "marks" : 76, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602fa"), "id" : 31368, "marks" : 77, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602fb"), "id" : 31369, "marks" : 78, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602fc"), "id" : 31370, "marks" : 79, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602fd"), "id" : 31371, "marks" : 80, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602fe"), "id" : 31372, "marks" : 81, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602ff"), "id" : 31373, "marks" : 82, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c660300"), "id" : 31374, "marks" : 83, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c660301"), "id" : 31375, "marks" : 84, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c660302"), "id" : 31376, "marks" : 85, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c660303"), "id" : 31377, "marks" : 86, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c660304"), "id" : 31378, "marks" : 87, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c660305"), "id" : 31379, "marks" : 88, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c660306"), "id" : 31380, "marks" : 89, "age" : 22 }
+Type "it" for more
+> it
+{ "_id" : ObjectId("635b5e2e130c18c36c660307"), "id" : 31381, "marks" : 90, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c660308"), "id" : 31382, "marks" : 91, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c660309"), "id" : 31383, "marks" : 92, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c66030a"), "id" : 31384, "marks" : 93, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c66030b"), "id" : 31385, "marks" : 94, "age" : 22 }
+{ "_id" : ObjectId("635b5e2e130c18c36c66030c"), "id" : 31386, "marks" : 95, "age" : 22 }
+
+> for(var i=31301;i<=31322;i++){db.studentData.update({id:i},{$set:{Batch:"K3"}})}
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> for(var i=31323;i<=31344;i++){db.studentData.update({id:i},{$set:{Batch:"L3"}})}
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> for(var i=31344;i<=31366;i++){db.studentData.update({id:i},{$set:{Batch:"M3"}})}
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> for(var i=31367;i<=31386;i++){db.studentData.update({id:i},{$set:{Batch:"N3"}})}
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.studentData.find()
+{ "_id" : ObjectId("635b5e2e130c18c36c6602b7"), "id" : 31301, "marks" : 10, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602b8"), "id" : 31302, "marks" : 11, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602b9"), "id" : 31303, "marks" : 12, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602ba"), "id" : 31304, "marks" : 13, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602bb"), "id" : 31305, "marks" : 14, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602bc"), "id" : 31306, "marks" : 15, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602bd"), "id" : 31307, "marks" : 16, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602be"), "id" : 31308, "marks" : 17, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602bf"), "id" : 31309, "marks" : 18, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c0"), "id" : 31310, "marks" : 19, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c1"), "id" : 31311, "marks" : 20, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c2"), "id" : 31312, "marks" : 21, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c3"), "id" : 31313, "marks" : 22, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c4"), "id" : 31314, "marks" : 23, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c5"), "id" : 31315, "marks" : 24, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c6"), "id" : 31316, "marks" : 25, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c7"), "id" : 31317, "marks" : 26, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c8"), "id" : 31318, "marks" : 27, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602c9"), "id" : 31319, "marks" : 28, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602ca"), "id" : 31320, "marks" : 29, "age" : 22, "Batch" : "K3" }
+Type "it" for more
+> it
+{ "_id" : ObjectId("635b5e2e130c18c36c6602cb"), "id" : 31321, "marks" : 30, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602cc"), "id" : 31322, "marks" : 31, "age" : 22, "Batch" : "K3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602cd"), "id" : 31323, "marks" : 32, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602ce"), "id" : 31324, "marks" : 33, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602cf"), "id" : 31325, "marks" : 34, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d0"), "id" : 31326, "marks" : 35, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d1"), "id" : 31327, "marks" : 36, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d2"), "id" : 31328, "marks" : 37, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d3"), "id" : 31329, "marks" : 38, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d4"), "id" : 31330, "marks" : 39, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d5"), "id" : 31331, "marks" : 40, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d6"), "id" : 31332, "marks" : 41, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d7"), "id" : 31333, "marks" : 42, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d8"), "id" : 31334, "marks" : 43, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602d9"), "id" : 31335, "marks" : 44, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602da"), "id" : 31336, "marks" : 45, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602db"), "id" : 31337, "marks" : 46, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602dc"), "id" : 31338, "marks" : 47, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602dd"), "id" : 31339, "marks" : 48, "age" : 22, "Batch" : "L3" }
+{ "_id" : ObjectId("635b5e2e130c18c36c6602de"), "id" : 31340, "marks" : 49, "age" : 22, "Batch" : "L3" }
+Type "it" for more
+
+
+

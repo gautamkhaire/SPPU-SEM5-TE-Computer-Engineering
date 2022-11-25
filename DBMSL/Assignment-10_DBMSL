@@ -1,0 +1,324 @@
+(base) student@student-OptiPlex-3020:~/mongodb-linux-x86_64-2.6.3/bin$ ./mongo 10.10.12.108/mongot31323db -u t31323 -p
+MongoDB shell version: 2.6.3
+Enter password: 
+connecting to: 10.10.12.108/mongot31323db
+> db.student.find().pretty()
+{
+	"_id" : ObjectId("634d1251d11b4088c0a9d816"),
+	"name" : "Gautam Khaire",
+	"division" : "TE3",
+	"DOB" : "06-05-2002",
+	"bloodGroup" : "B+",
+	"address" : {
+		"city" : "Pune",
+		"state" : "Maharashtra",
+		"Pincode" : 411028
+	},
+	"subjects" : [
+		"DBMS",
+		"SPOS",
+		"CNS",
+		"TOC",
+		"DS"
+	]
+}
+{
+	"_id" : ObjectId("634d129cd11b4088c0a9d817"),
+	"name" : "Shrikant Kharat",
+	"division" : "TE3",
+	"DOB" : "25-08-2002",
+	"bloodGroup" : "A+",
+	"address" : {
+		"city" : "Jalna",
+		"state" : "Maharashtra",
+		"Pincode" : 431203
+	},
+	"subjects" : [
+		"DBMS",
+		"SPOS",
+		"CNS",
+		"TOC"
+	]
+}
+{
+	"_id" : ObjectId("634d133fd11b4088c0a9d818"),
+	"name" : "Nikita Kulkarni",
+	"division" : "TE3",
+	"DOB" : "01-08-2002",
+	"bloodGroup" : "O+",
+	"address" : {
+		"city" : "Pune",
+		"state" : "Maharashtra",
+		"Pincode" : 411021
+	},
+	"subjects" : [
+		"DBMS",
+		"SPOS",
+		"CNS",
+		"TOC",
+		"DS"
+	]
+}
+{
+	"_id" : ObjectId("634d137fd11b4088c0a9d819"),
+	"name" : "Sanhita Kulkarni",
+	"division" : "TE3",
+	"DOB" : "17-09-2002",
+	"bloodGroup" : "B+",
+	"address" : {
+		"city" : "Pune",
+		"state" : "Maharashtra",
+		"Pincode" : 411014
+	},
+	"subjects" : [
+		"DBMS",
+		"SPOS",
+		"CNS",
+		"TOC",
+		"DS"
+	]
+}
+{
+	"_id" : ObjectId("634d13cbd11b4088c0a9d81a"),
+	"name" : "Maanav Chandwani",
+	"division" : "TE3",
+	"DOB" : "19-10-2002",
+	"bloodGroup" : "O+",
+	"address" : {
+		"city" : "Kolhapur",
+		"state" : "Maharashtra",
+		"Pincode" : 416003
+	},
+	"subjects" : [
+		"DBMS",
+		"SPOS",
+		"CNS",
+		"TOC"
+	]
+}
+{
+	"_id" : ObjectId("634d146ad11b4088c0a9d81b"),
+	"name" : "Sangmeshwar Mahajan",
+	"division" : "TE3",
+	"DOB" : "04-07-2002",
+	"bloodGroup" : "O+",
+	"address" : {
+		"city" : "Latur",
+		"state" : "Maharashtra",
+		"Pincode" : 413519
+	},
+	"subjects" : [
+		"DBMS",
+		"SPOS",
+		"CNS"
+	]
+}
+{
+	"_id" : ObjectId("634d14c0d11b4088c0a9d81c"),
+	"name" : "Om kuklani",
+	"division" : "TE3",
+	"DOB" : "23-09-2002",
+	"bloodGroup" : "o-ve",
+	"address" : {
+		"Pincode" : "411007"
+	},
+	"subjects" : [
+		"DBMS",
+		"SPOS",
+		"CNS",
+		"DS"
+	]
+}
+> db.student.getIndexes()
+[
+	{
+		"v" : 1,
+		"key" : {
+			"_id" : 1
+		},
+		"name" : "_id_",
+		"ns" : "mongot31323db.student"
+	}
+]
+> db.student.createIndex({'name':1})
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 1,
+	"numIndexesAfter" : 2,
+	"ok" : 1
+}
+
+> db.student.createIndex({name:1,DOB:-1});
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 2,
+	"numIndexesAfter" : 3,
+	"ok" : 1
+}
+
+> db.student.getIndexes()
+[
+	{
+		"v" : 1,
+		"key" : {
+			"_id" : 1
+		},
+		"name" : "_id_",
+		"ns" : "mongot31323db.student"
+	},
+	{
+		"v" : 1,
+		"key" : {
+			"name" : 1
+		},
+		"name" : "name_1",
+		"ns" : "mongot31323db.student"
+	},
+	{
+		"v" : 1,
+		"key" : {
+			"name" : 1,
+			"DOB" : -1
+		},
+		"name" : "name_1_DOB_-1",
+		"ns" : "mongot31323db.student"
+	}
+]
+
+> db.student.dropIndex("name_1");
+{ "nIndexesWas" : 3, "ok" : 1 }
+> db.student.getIndexes()
+[
+	{
+		"v" : 1,
+		"key" : {
+			"_id" : 1
+		},
+		"name" : "_id_",
+		"ns" : "mongot31323db.student"
+	},
+	{
+		"v" : 1,
+		"key" : {
+			"name" : 1,
+			"DOB" : -1
+		},
+		"name" : "name_1_DOB_-1",
+		"ns" : "mongot31323db.student"
+	}
+]
+
+> db.student.createIndex({"name":1},{unique:true});
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 2,
+	"numIndexesAfter" : 3,
+	"ok" : 1
+}
+> db.student.getIndexes()
+[
+	{
+		"v" : 1,
+		"key" : {
+			"_id" : 1
+		},
+		"name" : "_id_",
+		"ns" : "mongot31323db.student"
+	},
+	{
+		"v" : 1,
+		"key" : {
+			"name" : 1,
+			"DOB" : -1
+		},
+		"name" : "name_1_DOB_-1",
+		"ns" : "mongot31323db.student"
+	},
+	{
+		"v" : 1,
+		"unique" : true,
+		"key" : {
+			"name" : 1
+		},
+		"name" : "name_1",
+		"ns" : "mongot31323db.student"
+	}
+]
+
+
+
+> db.student.update({'name':"Gautam Khaire"},{$set:{marks:95}},{upsert:true})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.student.update({'name':"Shrikant"},{$set:{marks:85}},{upsert:true})
+WriteResult({
+	"nMatched" : 0,
+	"nUpserted" : 1,
+	"nModified" : 0,
+	"_id" : ObjectId("635b5394caf3273ee3a328b7")
+})
+
+> db.student.update({'name':"Shrikant Kharat"},{$set:{marks:85}},{upsert:true})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.student.update({'name':"Nikita Kulkarni"},{$set:{marks:88}},{upsert:true})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.student.update({'name':"Sanhita Kulkarni"},{$set:{marks:90}},{upsert:true})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.student.update({'name':"Maanav Chandwani"},{$set:{marks:80}},{upsert:true})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.student.update({'name':"Om Kulkani"},{$set:{marks:75}},{upsert:true})
+WriteResult({
+	"nMatched" : 0,
+	"nUpserted" : 1,
+	"nModified" : 0,
+	"_id" : ObjectId("635b540ecaf3273ee3a328b8")
+})
+> db.student.update({'name':"Om Kuklani"},{$set:{marks:75}},{upsert:true})
+WriteResult({
+	"nMatched" : 0,
+	"nUpserted" : 1,
+	"nModified" : 0,
+	"_id" : ObjectId("635b5419caf3273ee3a328b9")
+})
+> db.student.update({'name':"Om kuklani"},{$set:{marks:75}},{upsert:true})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+
+> db.student.aggregate([{$match:{name:'Gautam Khaire'}}])
+{ "_id" : ObjectId("634d1251d11b4088c0a9d816"), "name" : "Gautam Khaire", "division" : "TE3", "DOB" : "06-05-2002", "bloodGroup" : "B+", "address" : { "city" : "Pune", "state" : "Maharashtra", "Pincode" : 411028 }, "subjects" : [ "DBMS", "SPOS", "CNS", "TOC", "DS" ] }
+
+> db.student.update({name:'Gautam Khaire'},{$set:{age:21}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.student.aggregate([{$match:{age:21}},{$group:{_id:'$age'}}])
+{ "_id" : 21 }
+
+> db.student.aggregate([{$match:{bloodGroup:"O+"}},{$group:{_id:"id",total:{$sum:"$marks"}}}]);
+{ "_id" : "id", "total" : 168 }
+
+> db.student.aggregate([{$group:{_id:{name:'$name'},sumMarks:{$sum:"$marks"},avgMarks:{$avg:"$marks"}}}])
+{ "_id" : { "name" : "Om Kulkani" }, "sumMarks" : 75, "avgMarks" : 75 }
+{ "_id" : { "name" : "Om Kuklani" }, "sumMarks" : 75, "avgMarks" : 75 }
+{ "_id" : { "name" : "Shrikant Kharat" }, "sumMarks" : 85, "avgMarks" : 85 }
+{ "_id" : { "name" : "Shrikant" }, "sumMarks" : 85, "avgMarks" : 85 }
+{ "_id" : { "name" : "Om kuklani" }, "sumMarks" : 75, "avgMarks" : 75 }
+{ "_id" : { "name" : "Sanhita Kulkarni" }, "sumMarks" : 90, "avgMarks" : 90 }
+{ "_id" : { "name" : "Sangmeshwar Mahajan" }, "sumMarks" : 0, "avgMarks" : 0 }
+{ "_id" : { "name" : "Maanav Chandwani" }, "sumMarks" : 80, "avgMarks" : 80 }
+{ "_id" : { "name" : "Nikita Kulkarni" }, "sumMarks" : 88, "avgMarks" : 88 }
+{ "_id" : { "name" : "Gautam Khaire" }, "sumMarks" : 95, "avgMarks" : 95 }
+
+> db.student.aggregate([{$match:{bloodGroup:"O+"}},{$group:{_id:{name:'$name'}}}]);
+{ "_id" : { "name" : "Sangmeshwar Mahajan" } }
+{ "_id" : { "name" : "Maanav Chandwani" } }
+{ "_id" : { "name" : "Nikita Kulkarni" } }
+
+> db.student.aggregate([{$match:{bloodGroup:"O+"}},{$group:{_id:{name:'$name'}}},{$sort:{name:1}},{$limit:2}]);
+{ "_id" : { "name" : "Sangmeshwar Mahajan" } }
+{ "_id" : { "name" : "Maanav Chandwani" } }
+
+
+> db.student.find({subjects : {$all : ['TOC','DS']}});
+{ "_id" : ObjectId("634d1251d11b4088c0a9d816"), "name" : "Gautam Khaire", "division" : "TE3", "DOB" : "06-05-2002", "bloodGroup" : "B+", "address" : { "city" : "Pune", "state" : "Maharashtra", "Pincode" : 411028 }, "subjects" : [ "DBMS", "SPOS", "CNS", "TOC", "DS" ], "age" : 21 }
+{ "_id" : ObjectId("634d133fd11b4088c0a9d818"), "name" : "Nikita Kulkarni", "division" : "TE3", "DOB" : "01-08-2002", "bloodGroup" : "O+", "address" : { "city" : "Pune", "state" : "Maharashtra", "Pincode" : 411021 }, "subjects" : [ "DBMS", "SPOS", "CNS", "TOC", "DS" ] }
+{ "_id" : ObjectId("634d137fd11b4088c0a9d819"), "name" : "Sanhita Kulkarni", "division" : "TE3", "DOB" : "17-09-2002", "bloodGroup" : "B+", "address" : { "city" : "Pune", "state" : "Maharashtra", "Pincode" : 411014 }, "subjects" : [ "DBMS", "SPOS", "CNS", "TOC", "DS" ] }
+

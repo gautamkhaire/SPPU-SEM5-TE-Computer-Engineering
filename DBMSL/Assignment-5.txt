@@ -1,0 +1,76 @@
+mysql> create table Result(
+    -> name varchar(20),
+    -> class varchar(20)
+    -> );
+
+mysql> create procedure calculateGrade(IN sname varchar(20),IN marks int)
+    -> begin
+    -> declare speciality condition for sqlstate '45000';
+    -> if marks<0 then
+    -> signal sqlstate '45000' set message_text="Error";
+    -> end if;
+    -> if marks<=1500 and marks>=990 then
+    -> insert into Result values (sname,"Distinction");
+    -> elseif marks<=989 and marks>=900 then
+    -> insert into Result values (sname,"First Class");
+    -> elseif marks<=899 and marks>=825 then
+    -> insert into Result values (sname,"Higher Second");
+    -> end if;
+    -> end;
+    -> $$
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> call calculateGrade("Gautam",1489);
+    -> $$
+Query OK, 1 row affected (0.04 sec)
+
+mysql> delimiter ;
+mysql> select * from Result;
++--------+-------------+
+| name   | class       |
++--------+-------------+
+| Gautam | Distinction |
++--------+-------------+
+1 row in set (0.00 sec)
+
+mysql> call calculateGrade("Shrikant",-2);
+ERROR 1644 (45000): Error
+mysql> call calculateGrade("Adit",850);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from result;
++--------+---------------+
+| name   | class         |
++--------+---------------+
+| Gautam | Distinction   |
+| Adit   | Higher Second |
++--------+---------------+
+2 rows in set (0.00 sec)
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+create function fun(IN sname varchar(20),IN marks int) 
+returns varchar(20)
+DETERMINISTIC
+begin
+declare d varchar(20);
+declare speciality condition for sqlstate '45000';
+if marks<0 then
+signal sqlstate '45000' set message_text="Error";
+end if;
+if marks<=1500 and marks>=990 then
+insert into Result values (sname,"Distinction");
+elseif marks<=989 and marks>=900 then
+insert into Result values (sname,"First Class");
+elseif marks<=899 and marks>=825 then
+insert into Result values (sname,"Higher Second");
+end if;
+select class into d from Result where name=sname;
+return d;
+end;
+$$

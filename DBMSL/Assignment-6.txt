@@ -1,0 +1,187 @@
+mysql> create table n_empid(
+    -> eid int,
+    -> ename varchar(20),
+    -> salary int,
+    -> did int,
+    -> dname varchar(20)
+    -> );
+    -> $$
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> delimiter ;
+mysql> create table o_empid(
+    -> eid int,
+    -> ename varchar(20),
+    -> salary int,
+    -> did int,
+    -> dname varchar(20)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into n_empid values(31323,'Gautam',90000,1,'CE');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into n_empid values(31324,'Shrikant',50000,1,'CE');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into n_empid values(31829,'Chanchal',50000,2,'IT');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into n_empid values(31882,'Yash',90000,2,'IT');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into n_empid values(38882,'Yashu',30000,3,'ENTC');
+Query OK, 1 row affected (0.04 sec)
+
+---------------------------------------- CURSOR UNPARAMETERIZED -------------------------------------------------
+
+mysql> delimiter ;
+mysql> delimiter $
+mysql> create procedure merge()
+    -> begin
+    -> declare neid,nsal,ndid int;
+    -> declare oeid int default 0;
+    -> declare nename,ndname varchar(20);
+    -> declare cur1 cursor for select * from n_empid;
+    -> open cur1;
+    -> data: LOOP
+    -> fetch cur1 into neid,nename,nsal,ndid,ndname;
+    -> select neid;
+    -> select eid into oeid from o_empid where eid=neid;
+    -> select oeid;
+    -> if oeid=0 then
+    -> insert into o_empid values (neid,nename,nsal,ndid,ndname);
+    -> end if;
+    -> end LOOP;
+    -> close cur1;
+    -> end;
+    -> $
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> select * from n_empid;
+    -> $
++-------+----------+--------+------+-------+
+| eid   | ename    | salary | did  | dname |
++-------+----------+--------+------+-------+
+| 31323 | Gautam   |  90000 |    1 | CE    |
+| 31324 | Shrikant |  50000 |    1 | CE    |
+| 31829 | Chanchal |  50000 |    2 | IT    |
+| 31882 | Yash     |  90000 |    2 | IT    |
+| 38882 | Yashu    |  30000 |    3 | ENTC  |
++-------+----------+--------+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> delimiter ;
+mysql> select * from o_empid;
+Empty set (0.04 sec)
+
+mysql> call merge();
++-------+
+| neid  |
++-------+
+| 31323 |
++-------+
+1 row in set (0.04 sec)
+
++------+
+| oeid |
++------+
+|    0 |
++------+
+1 row in set (0.04 sec)
+
++-------+
+| neid  |
++-------+
+| 31324 |
++-------+
+1 row in set (0.05 sec)
+
++------+
+| oeid |
++------+
+|    0 |
++------+
+1 row in set (0.06 sec)
+
++-------+
+| neid  |
++-------+
+| 31829 |
++-------+
+1 row in set (0.07 sec)
+
++------+
+| oeid |
++------+
+|    0 |
++------+
+1 row in set (0.07 sec)
+
++-------+
+| neid  |
++-------+
+| 31882 |
++-------+
+1 row in set (0.08 sec)
+
++------+
+| oeid |
++------+
+|    0 |
++------+
+1 row in set (0.09 sec)
+
++-------+
+| neid  |
++-------+
+| 38882 |
++-------+
+1 row in set (0.09 sec)
+
++------+
+| oeid |
++------+
+|    0 |
++------+
+1 row in set (0.10 sec)
+
+ERROR 1329 (02000): No data - zero rows fetched, selected, or processed
+mysql> select * from o_empid;
++-------+----------+--------+------+-------+
+| eid   | ename    | salary | did  | dname |
++-------+----------+--------+------+-------+
+| 31323 | Gautam   |  90000 |    1 | CE    |
+| 31324 | Shrikant |  50000 |    1 | CE    |
+| 31829 | Chanchal |  50000 |    2 | IT    |
+| 31882 | Yash     |  90000 |    2 | IT    |
+| 38882 | Yashu    |  30000 |    3 | ENTC  |
++-------+----------+--------+------+-------+
+5 rows in set (0.00 sec)
+
+--------------------------------------------------------------- PARAMETERIZED ---------------------------------------------------------------
+
+mysql> create procedure mergeU(in neid int)
+    -> begin
+    -> declare nsal,ndid int;
+    -> DECLARE d INT DEFAULT 0; 
+    -> declare oeid int default 0;
+    -> declare nename,ndname varchar(20);
+    -> declare cur1 cursor for select * from n_empid;
+    -> DECLARE CONTINUE HANDLER FOR SQLSTATE '02000' 
+    -> SET d = 1;
+    -> open cur1;
+    -> data: LOOP
+    -> IF d = 1 THEN 
+    -> LEAVE data; 
+    -> END IF; 
+    -> IF NOT d = 1 THEN 
+    -> fetch cur1 into neid,nename,nsal,ndid,ndname;
+    -> select eid into oeid from o_empid where eid=neid;
+    -> if oeid!=neid then
+    -> insert into o_empid values(neid,nename,nsal,ndid,ndname);
+    -> end if;
+    -> end if;
+    -> end LOOP;
+    -> close cur1;
+    -> end @@

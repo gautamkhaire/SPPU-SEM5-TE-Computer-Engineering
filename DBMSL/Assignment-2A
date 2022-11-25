@@ -1,0 +1,772 @@
+(base) student@student-OptiPlex-3020:~/Desktop$ mysql -h 10.10.10.216 -u t31323 -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 200
+Server version: 5.5.43-MariaDB MariaDB Server
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use t31323db;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table Dept;
+ERROR 1113 (42000): A table must have at least 1 column
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table Dept(Dept_id integer,dname varchar(10),dlocation varchar(20));_
+Query OK, 0 rows affected (0.05 sec)
+
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '_' at line 1
+mysql> show tables;
++--------------------+
+| Tables_in_t31323db |
++--------------------+
+| Dept               |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> desc Dept;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Dept_id   | int(11)     | YES  |     | NULL    |       |
+| dname     | varchar(10) | YES  |     | NULL    |       |
+| dlocation | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> drop table Dept;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table Dept(Dept_id integer,dname varchar(10),dlocation varchar(20)primary key(Dept_id));_
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(Dept_id))' at line 1
+    -> create table Dept(Dept_id int,dname varchar(10),dlocation varchar(20),primary key(Dept_id));_
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '_
+create table Dept(Dept_id int,dname varchar(10),dlocation varchar(20),primary ' at line 1
+    -> _ create table Dept(Dept_id int,dname varchar(10),dlocation varchar(20),primary-key(Dept_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '_
+_ create table Dept(Dept_id int,dname varchar(10),dlocation varchar(20),primar' at line 1
+mysql> clear
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table Dept(Dept_id int,dname varchar(10),dlocation varchar(20),primary key(Dept_id));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> desc Dept;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Dept_id   | int(11)     | NO   | PRI | 0       |       |
+| dname     | varchar(10) | YES  |     | NULL    |       |
+| dlocation | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table Employee(Emp_id int,Dept_id int,fname varchar(10),lname varchar(10),designation varchar(10),salary double,JoinDate DATE,primary key(Emp_id),foreign key(Dept_id) references Dept(Dept_id) on delete cascade);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc Employee;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Emp_id      | int(11)     | NO   | PRI | 0       |       |
+| Dept_id     | int(11)     | YES  | MUL | NULL    |       |
+| fname       | varchar(10) | YES  |     | NULL    |       |
+| lname       | varchar(10) | YES  |     | NULL    |       |
+| designation | varchar(10) | YES  |     | NULL    |       |
+| salary      | double      | YES  |     | NULL    |       |
+| JoinDate    | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> create table Project(Proj_id int,Pname varchar(10),Plocation varchar(20),Pcost double,Pyear YEAR,primary key(Proj_id),foreign Key(Dept_id) references Dept(Dept_id));
+ERROR 1072 (42000): Key column 'Dept_id' doesn't exist in table
+mysql> create table Project(Proj_id int,Pname varchar(10),Plocation varchar(20),Pcost double,Pyear YEAR,primary key(Proj_id),foreign Key(Dept_id) references(Dept_id) on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(Dept_id) on delete cascade)' at line 1
+mysql> create table Project(Proj_id int,Pname varchar(10),Plocation varchar(20),Pcost double,Pyear YEAR,primary key(Proj_id),foreign key(Dept_id) references Dept(Dept_id) on delete cascade);
+ERROR 1072 (42000): Key column 'Dept_id' doesn't exist in table
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> create table Project
+    -> (
+    -> Proj_id int,
+    -> Dept_id int,
+    -> Pname varchar(10),
+    -> Plocation varchar(10),
+    -> Pcost double,
+    -> Pyear YEAR,
+    -> primary key(Proj_id),
+    -> foreign key(Dept_id) references Dept(Dept_id) on delete cascade
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc Project;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Proj_id   | int(11)     | NO   | PRI | 0       |       |
+| Dept_id   | int(11)     | YES  | MUL | NULL    |       |
+| Pname     | varchar(10) | YES  |     | NULL    |       |
+| Plocation | varchar(10) | YES  |     | NULL    |       |
+| Pcost     | double      | YES  |     | NULL    |       |
+| Pyear     | year(4)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_t31323db |
++--------------------+
+| Dept               |
+| Employee           |
+| Project            |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into Employee values(31323,1,'Gautam','Khaire','Software Development Engineer',350000.75,2024-05-06);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`t31323db`.`Employee`, CONSTRAINT `Employee_ibfk_1` FOREIGN KEY (`Dept_id`) REFERENCES `Dept` (`Dept_id`) ON DELETE CASCADE)
+mysql> clear
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> show tables;
++--------------------+
+| Tables_in_t31323db |
++--------------------+
+| Dept               |
+| Employee           |
+| Project            |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into Dept(2,Blockchain,Pune);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '2,Blockchain,Pune)' at line 1
+mysql> insert into Dept values(2,Blockchain,Pune);
+ERROR 1054 (42S22): Unknown column 'Blockchain' in 'field list'
+mysql> insert into Dept values(2,'Blockchain','Pune');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from Dept;
++---------+------------+-----------+
+| Dept_id | dname      | dlocation |
++---------+------------+-----------+
+|       2 | Blockchain | Pune      |
++---------+------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> insert into Dept values(1,'Design','Pune');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into Dept values(3,'Mobile App','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Dept values(4,'Web Development','Pune');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> insert into Dept values(5,'Artifical Intelligence','Mumbai');
+Query OK, 1 row affected, 1 warning (0.08 sec)
+
+mysql> insert into Dept values(6,'Machine Learning','Mumbai');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into Dept values(7,'Data Science','Mumbai');
+Query OK, 1 row affected, 1 warning (0.02 sec)
+
+mysql> insert into Dept values(8,'Cyber Security','Pune');
+Query OK, 1 row affected, 1 warning (0.09 sec)
+
+mysql> truncate table Dept;
+ERROR 1701 (42000): Cannot truncate a table referenced in a foreign key constraint (`t31323db`.`Employee`, CONSTRAINT `Employee_ibfk_1` FOREIGN KEY (`Dept_id`) REFERENCES `t31323db`.`Dept` (`Dept_id`))
+mysql> select * from Dept;
++---------+------------+-----------+
+| Dept_id | dname      | dlocation |
++---------+------------+-----------+
+|       1 | Design     | Pune      |
+|       2 | Blockchain | Pune      |
+|       3 | Mobile App | Pune      |
+|       4 | Web Develo | Pune      |
+|       5 | Artifical  | Mumbai    |
+|       6 | Machine Le | Mumbai    |
+|       7 | Data Scien | Mumbai    |
+|       8 | Cyber Secu | Pune      |
++---------+------------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> delete from Dept where Dept_id=1;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Dept;
++---------+------------+-----------+
+| Dept_id | dname      | dlocation |
++---------+------------+-----------+
+|       2 | Blockchain | Pune      |
+|       3 | Mobile App | Pune      |
+|       4 | Web Develo | Pune      |
+|       5 | Artifical  | Mumbai    |
+|       6 | Machine Le | Mumbai    |
+|       7 | Data Scien | Mumbai    |
+|       8 | Cyber Secu | Pune      |
++---------+------------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> truncate table Dept;
+ERROR 1701 (42000): Cannot truncate a table referenced in a foreign key constraint (`t31323db`.`Employee`, CONSTRAINT `Employee_ibfk_1` FOREIGN KEY (`Dept_id`) REFERENCES `t31323db`.`Dept` (`Dept_id`))
+mysql> truncate Dept;
+ERROR 1701 (42000): Cannot truncate a table referenced in a foreign key constraint (`t31323db`.`Employee`, CONSTRAINT `Employee_ibfk_1` FOREIGN KEY (`Dept_id`) REFERENCES `t31323db`.`Dept` (`Dept_id`))
+mysql> truncate table dept;
+ERROR 1146 (42S02): Table 't31323db.dept' doesn't exist
+mysql> truncate table Dept;
+ERROR 1701 (42000): Cannot truncate a table referenced in a foreign key constraint (`t31323db`.`Employee`, CONSTRAINT `Employee_ibfk_1` FOREIGN KEY (`Dept_id`) REFERENCES `t31323db`.`Dept` (`Dept_id`))
+mysql> delete * from Dept;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '* from Dept' at line 1
+mysql> delete * from Dept;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '* from Dept' at line 1
+mysql> delete from Dept where dlocation='Pune';
+Query OK, 4 rows affected (0.01 sec)
+
+mysql> delete from Dept where dlocation='Mumbai';
+Query OK, 3 rows affected (0.01 sec)
+
+mysql> desc Dept;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Dept_id   | int(11)     | NO   | PRI | 0       |       |
+| dname     | varchar(10) | YES  |     | NULL    |       |
+| dlocation | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Dept;
+Empty set (0.00 sec)
+
+mysql> insert into Dept values(1,'Computer','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Dept values(2,'IT','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Dept values(3,'ENTC','Mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Dept values(4,'Civil','Nagpur');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Dept values(5,'Auto Mobile','Nagpur');
+Query OK, 1 row affected, 1 warning (0.02 sec)
+
+mysql> select * from Dept;
++---------+------------+-----------+
+| Dept_id | dname      | dlocation |
++---------+------------+-----------+
+|       1 | Computer   | Pune      |
+|       2 | IT         | Pune      |
+|       3 | ENTC       | Mumbai    |
+|       4 | Civil      | Nagpur    |
+|       5 | Auto Mobil | Nagpur    |
++---------+------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into Employee values(31323,1,'Gautam','Khaire','Software Engineer',350000.75,2024-05-06);
+Query OK, 1 row affected, 2 warnings (0.00 sec)
+
+mysql> insert into Employee values(31323,1,'Shrikant','Kharat','Software Engineer',250000.75,2024-07-10);
+ERROR 1062 (23000): Duplicate entry '31323' for key 'PRIMARY'
+mysql> insert into Employee values(31324,1,'Shrikant','Kharat','Software Engineer',250000.75,2024-07-10);
+Query OK, 1 row affected, 2 warnings (0.01 sec)
+
+mysql> insert into Employee values(31980,2,'Chanchal','Wadhwa','Software Engineer',3000000.75,2024-10-5);
+Query OK, 1 row affected, 2 warnings (0.02 sec)
+
+mysql> insert into Employee values(31981,2,'Yash','Sonawane','Software Engineer',3500000.75,2024-10-5);
+Query OK, 1 row affected, 2 warnings (0.02 sec)
+
+mysql> select * from Employee;
++--------+---------+----------+----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname    | designation | salary     | JoinDate   |
++--------+---------+----------+----------+-------------+------------+------------+
+|  31323 |       1 | Gautam   | Khaire   | Software E  |  350000.75 | 0000-00-00 |
+|  31324 |       1 | Shrikant | Kharat   | Software E  |  250000.75 | 0000-00-00 |
+|  31980 |       2 | Chanchal | Wadhwa   | Software E  | 3000000.75 | 0000-00-00 |
+|  31981 |       2 | Yash     | Sonawane | Software E  | 3500000.75 | 0000-00-00 |
++--------+---------+----------+----------+-------------+------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into Employee values(31307,1,'Shivam','Dhonde','Manager',3500000.75,'2024-10-15');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from Employee;
++--------+---------+----------+----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname    | designation | salary     | JoinDate   |
++--------+---------+----------+----------+-------------+------------+------------+
+|  31307 |       1 | Shivam   | Dhonde   | Manager     | 3500000.75 | 2024-10-15 |
+|  31323 |       1 | Gautam   | Khaire   | Software E  |  350000.75 | 0000-00-00 |
+|  31324 |       1 | Shrikant | Kharat   | Software E  |  250000.75 | 0000-00-00 |
+|  31980 |       2 | Chanchal | Wadhwa   | Software E  | 3000000.75 | 0000-00-00 |
+|  31981 |       2 | Yash     | Sonawane | Software E  | 3500000.75 | 0000-00-00 |
++--------+---------+----------+----------+-------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update Employee set JoinDate='2024-05-06' where Emp_id=31323;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Employee;
++--------+---------+----------+----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname    | designation | salary     | JoinDate   |
++--------+---------+----------+----------+-------------+------------+------------+
+|  31307 |       1 | Shivam   | Dhonde   | Manager     | 3500000.75 | 2024-10-15 |
+|  31323 |       1 | Gautam   | Khaire   | Software E  |  350000.75 | 2024-05-06 |
+|  31324 |       1 | Shrikant | Kharat   | Software E  |  250000.75 | 0000-00-00 |
+|  31980 |       2 | Chanchal | Wadhwa   | Software E  | 3000000.75 | 0000-00-00 |
+|  31981 |       2 | Yash     | Sonawane | Software E  | 3500000.75 | 0000-00-00 |
++--------+---------+----------+----------+-------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update Employee set JoinDate='2024-10-06' where Emp_id=31324;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set JoinDate='2024-12-9' where Emp_id=31980;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set JoinDate='2024-12-9' where Emp_id=31981;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Employee;
++--------+---------+----------+----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname    | designation | salary     | JoinDate   |
++--------+---------+----------+----------+-------------+------------+------------+
+|  31307 |       1 | Shivam   | Dhonde   | Manager     | 3500000.75 | 2024-10-15 |
+|  31323 |       1 | Gautam   | Khaire   | Software E  |  350000.75 | 2024-05-06 |
+|  31324 |       1 | Shrikant | Kharat   | Software E  |  250000.75 | 2024-10-06 |
+|  31980 |       2 | Chanchal | Wadhwa   | Software E  | 3000000.75 | 2024-12-09 |
+|  31981 |       2 | Yash     | Sonawane | Software E  | 3500000.75 | 2024-12-09 |
++--------+---------+----------+----------+-------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into Employee values(31337,1,'Ankush','Mehta','Manager',2500000.75,'2024-1-15');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Employee values(31315,1,'Jay','Mehta','Product Manager',100000.75,'2024-9-15');
+Query OK, 1 row affected, 1 warning (0.03 sec)
+
+mysql> insert into Employee values(31390,5,'Yash','Jadhav','Site Engineer',104000.75,'2023-9-15');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> insert into Employee values(31590,4,'Vishal','Kundan','Auto Engineer',103000.75,'2022-9-15');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> select * from Employee;
++--------+---------+----------+----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname    | designation | salary     | JoinDate   |
++--------+---------+----------+----------+-------------+------------+------------+
+|  31307 |       1 | Shivam   | Dhonde   | Manager     | 3500000.75 | 2024-10-15 |
+|  31315 |       1 | Jay      | Mehta    | Product Ma  |  100000.75 | 2024-09-15 |
+|  31323 |       1 | Gautam   | Khaire   | Software E  |  350000.75 | 2024-05-06 |
+|  31324 |       1 | Shrikant | Kharat   | Software E  |  250000.75 | 2024-10-06 |
+|  31337 |       1 | Ankush   | Mehta    | Manager     | 2500000.75 | 2024-01-15 |
+|  31390 |       5 | Yash     | Jadhav   | Site Engin  |  104000.75 | 2023-09-15 |
+|  31590 |       4 | Vishal   | Kundan   | Auto Engin  |  103000.75 | 2022-09-15 |
+|  31980 |       2 | Chanchal | Wadhwa   | Software E  | 3000000.75 | 2024-12-09 |
+|  31981 |       2 | Yash     | Sonawane | Software E  | 3500000.75 | 2024-12-09 |
++--------+---------+----------+----------+-------------+------------+------------+
+9 rows in set (0.00 sec)
+
+mysql> insert into Employee values(41590,4,'Samyak','Kasturkar','Engineer',100200.05,'2022-10-15');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into Employee values(31309,1,'Tanmay','Jadhav','Software Engineer',200200.55,'2024-12-05');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> select * from Employee;
++--------+---------+----------+-----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname     | designation | salary     | JoinDate   |
++--------+---------+----------+-----------+-------------+------------+------------+
+|  31307 |       1 | Shivam   | Dhonde    | Manager     | 3500000.75 | 2024-10-15 |
+|  31309 |       1 | Tanmay   | Jadhav    | Software E  |  200200.55 | 2024-12-05 |
+|  31315 |       1 | Jay      | Mehta     | Product Ma  |  100000.75 | 2024-09-15 |
+|  31323 |       1 | Gautam   | Khaire    | Software E  |  350000.75 | 2024-05-06 |
+|  31324 |       1 | Shrikant | Kharat    | Software E  |  250000.75 | 2024-10-06 |
+|  31337 |       1 | Ankush   | Mehta     | Manager     | 2500000.75 | 2024-01-15 |
+|  31390 |       5 | Yash     | Jadhav    | Site Engin  |  104000.75 | 2023-09-15 |
+|  31590 |       4 | Vishal   | Kundan    | Auto Engin  |  103000.75 | 2022-09-15 |
+|  31980 |       2 | Chanchal | Wadhwa    | Software E  | 3000000.75 | 2024-12-09 |
+|  31981 |       2 | Yash     | Sonawane  | Software E  | 3500000.75 | 2024-12-09 |
+|  41590 |       4 | Samyak   | Kasturkar | Engineer    |  100200.05 | 2022-10-15 |
++--------+---------+----------+-----------+-------------+------------+------------+
+11 rows in set (0.00 sec)
+
+mysql> insert into Project values(1,1,'Mobile App','Pune',1902198.90,2024);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Project values(2,1,'Blockchain','Mumbai',9800098.50,2022);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Project values(3,3,'Building','Mumbai',200000,2022);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> update Project set Pcost=300000 where Proj_id=400000;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> update Project set Pcost=300000 where Proj_id=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set salary=50000000 where Emp_id=31337;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Project set Pcost=500000 where Proj_id=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select from * Project;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'from * Project' at line 1
+mysql> select * from Project;
++---------+---------+------------+-----------+--------+-------+
+| Proj_id | Dept_id | Pname      | Plocation | Pcost  | Pyear |
++---------+---------+------------+-----------+--------+-------+
+|       1 |       1 | Mobile App | Pune      | 300000 |  2024 |
+|       2 |       1 | Blockchain | Mumbai    | 500000 |  2022 |
+|       3 |       3 | Building   | Mumbai    | 200000 |  2022 |
++---------+---------+------------+-----------+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Project;
++---------+---------+------------+-----------+--------+-------+
+| Proj_id | Dept_id | Pname      | Plocation | Pcost  | Pyear |
++---------+---------+------------+-----------+--------+-------+
+|       1 |       1 | Mobile App | Pune      | 300000 |  2024 |
+|       2 |       1 | Blockchain | Mumbai    | 500000 |  2022 |
+|       3 |       3 | Building   | Mumbai    | 200000 |  2022 |
++---------+---------+------------+-----------+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from dept;
+ERROR 1146 (42S02): Table 't31323db.dept' doesn't exist
+mysql> select * from Dept;
++---------+------------+-----------+
+| Dept_id | dname      | dlocation |
++---------+------------+-----------+
+|       1 | Computer   | Pune      |
+|       2 | IT         | Pune      |
+|       3 | ENTC       | Mumbai    |
+|       4 | Civil      | Nagpur    |
+|       5 | Auto Mobil | Nagpur    |
++---------+------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from Employee;
++--------+---------+----------+-----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname     | designation | salary     | JoinDate   |
++--------+---------+----------+-----------+-------------+------------+------------+
+|  31307 |       1 | Shivam   | Dhonde    | Manager     | 3500000.75 | 2024-10-15 |
+|  31309 |       1 | Tanmay   | Jadhav    | Software E  |  200200.55 | 2024-12-05 |
+|  31315 |       1 | Jay      | Mehta     | Product Ma  |  100000.75 | 2024-09-15 |
+|  31323 |       1 | Gautam   | Khaire    | Software E  |  350000.75 | 2024-05-06 |
+|  31324 |       1 | Shrikant | Kharat    | Software E  |  250000.75 | 2024-10-06 |
+|  31337 |       1 | Ankush   | Mehta     | Manager     |   50000000 | 2024-01-15 |
+|  31390 |       5 | Yash     | Jadhav    | Site Engin  |  104000.75 | 2023-09-15 |
+|  31590 |       4 | Vishal   | Kundan    | Auto Engin  |  103000.75 | 2022-09-15 |
+|  31980 |       2 | Chanchal | Wadhwa    | Software E  | 3000000.75 | 2024-12-09 |
+|  31981 |       2 | Yash     | Sonawane  | Software E  | 3500000.75 | 2024-12-09 |
+|  41590 |       4 | Samyak   | Kasturkar | Engineer    |  100200.05 | 2022-10-15 |
++--------+---------+----------+-----------+-------------+------------+------------+
+11 rows in set (0.01 sec)
+
+mysql> select * from Dept where dname='Computer' OR dname='IT';
++---------+----------+-----------+
+| Dept_id | dname    | dlocation |
++---------+----------+-----------+
+|       1 | Computer | Pune      |
+|       2 | IT       | Pune      |
++---------+----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from Dept where dname='Computer' OR dname='IT' and fname like 'P%' or fname like 'H%';
+ERROR 1054 (42S22): Unknown column 'fname' in 'where clause'
+mysql> select * from Employee where Dept_id in (1,2) and fname like 'P%' or fname like 'H%';
+Empty set (0.01 sec)
+
+mysql> select * from Employee where Dept_id in (1,2);
++--------+---------+----------+----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname    | designation | salary     | JoinDate   |
++--------+---------+----------+----------+-------------+------------+------------+
+|  31307 |       1 | Shivam   | Dhonde   | Manager     | 3500000.75 | 2024-10-15 |
+|  31309 |       1 | Tanmay   | Jadhav   | Software E  |  200200.55 | 2024-12-05 |
+|  31315 |       1 | Jay      | Mehta    | Product Ma  |  100000.75 | 2024-09-15 |
+|  31323 |       1 | Gautam   | Khaire   | Software E  |  350000.75 | 2024-05-06 |
+|  31324 |       1 | Shrikant | Kharat   | Software E  |  250000.75 | 2024-10-06 |
+|  31337 |       1 | Ankush   | Mehta    | Manager     |   50000000 | 2024-01-15 |
+|  31980 |       2 | Chanchal | Wadhwa   | Software E  | 3000000.75 | 2024-12-09 |
+|  31981 |       2 | Yash     | Sonawane | Software E  | 3500000.75 | 2024-12-09 |
++--------+---------+----------+----------+-------------+------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> insert into Employee values(31333,1,'Pradnya','Kumar','Manager',98129.89,2024-10-07);
+Query OK, 1 row affected, 1 warning (0.02 sec)
+
+mysql> insert into Employee values(31335,2,'Pranjal','Deasi','Product Manager',90329.89,2024-10-07);
+Query OK, 1 row affected, 2 warnings (0.02 sec)
+
+mysql> select * from Employee where Dept_id in (1,2) and fname like 'P%' or fname like 'H%';
++--------+---------+---------+-------+-------------+----------+------------+
+| Emp_id | Dept_id | fname   | lname | designation | salary   | JoinDate   |
++--------+---------+---------+-------+-------------+----------+------------+
+|  31333 |       1 | Pradnya | Kumar | Manager     | 98129.89 | 0000-00-00 |
+|  31335 |       2 | Pranjal | Deasi | Product Ma  | 90329.89 | 0000-00-00 |
++--------+---------+---------+-------+-------------+----------+------------+
+2 rows in set (0.00 sec)
+
+mysql> update Employee set JoinDate='2020-10-07' where fname like 'P%';
+Query OK, 2 rows affected (0.02 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from Employee where Dept_id in (1,2) and fname like 'P%' or fname like 'H%';
++--------+---------+---------+-------+-------------+----------+------------+
+| Emp_id | Dept_id | fname   | lname | designation | salary   | JoinDate   |
++--------+---------+---------+-------+-------------+----------+------------+
+|  31333 |       1 | Pradnya | Kumar | Manager     | 98129.89 | 2020-10-07 |
+|  31335 |       2 | Pranjal | Deasi | Product Ma  | 90329.89 | 2020-10-07 |
++--------+---------+---------+-------+-------------+----------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select distinct designation from Employee;
++-------------+
+| designation |
++-------------+
+| Manager     |
+| Software E  |
+| Product Ma  |
+| Site Engin  |
+| Auto Engin  |
+| Engineer    |
++-------------+
+6 rows in set (0.00 sec)
+
+mysql> update Employee set JoinDate='2013-10-07' where Emp_id=31335;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select distinct designation from Employee;
++-------------+
+| designation |
++-------------+
+| Manager     |
+| Software E  |
+| Product Ma  |
+| Site Engin  |
+| Auto Engin  |
+| Engineer    |
++-------------+
+6 rows in set (0.00 sec)
+
+mysql> select salary*10/100+salary where JoinDate<=2015-01-01;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'where JoinDate<=2015-01-01' at line 1
+mysql> select 1.1*salary where JoinDate<=2015-01-01;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'where JoinDate<=2015-01-01' at line 1
+mysql> select 1.1*salary where JoinDate<='2015-01-01';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'where JoinDate<='2015-01-01'' at line 1
+mysql> select salary where JoinDate<='2015-01-01';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'where JoinDate<='2015-01-01'' at line 1
+mysql> select salary where JoinDate='2013-10-07';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'where JoinDate='2013-10-07'' at line 1
+mysql> select salary from Employee where JoinDate<='2015-01-01';
++----------+
+| salary   |
++----------+
+| 90329.89 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select 1.1*salary from Employee where JoinDate<='2015-01-01';
++------------+
+| 1.1*salary |
++------------+
+|  99362.879 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select Pname from Project where Plocation='Pune';
++------------+
+| Pname      |
++------------+
+| Mobile App |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select Pcost from Project where Pcost Between 100000 AND 500000;
++--------+
+| Pcost  |
++--------+
+| 300000 |
+| 500000 |
+| 200000 |
++--------+
+3 rows in set (0.00 sec)
+
+mysql> select Pcost from Project ORDER BY DSC ;
+ERROR 1054 (42S22): Unknown column 'DSC' in 'order clause'
+mysql> select Pcost from Project ORDER BY DESC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DESC' at line 1
+mysql> select Pcost from Project ORDER BY Pcost DESC;
++--------+
+| Pcost  |
++--------+
+| 500000 |
+| 300000 |
+| 200000 |
++--------+
+3 rows in set (0.00 sec)
+
+mysql> select AVG(Pcost) from Project;
++-------------------+
+| AVG(Pcost)        |
++-------------------+
+| 333333.3333333333 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from Employee ORDER BY Emp_id and fname DESC;
++--------+---------+----------+-----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname     | designation | salary     | JoinDate   |
++--------+---------+----------+-----------+-------------+------------+------------+
+|  31307 |       1 | Shivam   | Dhonde    | Manager     | 3500000.75 | 2024-10-15 |
+|  31981 |       2 | Yash     | Sonawane  | Software E  | 3500000.75 | 2024-12-09 |
+|  31980 |       2 | Chanchal | Wadhwa    | Software E  | 3000000.75 | 2024-12-09 |
+|  31590 |       4 | Vishal   | Kundan    | Auto Engin  |  103000.75 | 2022-09-15 |
+|  31390 |       5 | Yash     | Jadhav    | Site Engin  |  104000.75 | 2023-09-15 |
+|  31337 |       1 | Ankush   | Mehta     | Manager     |   50000000 | 2024-01-15 |
+|  31335 |       2 | Pranjal  | Deasi     | Product Ma  |   90329.89 | 2013-10-07 |
+|  31333 |       1 | Pradnya  | Kumar     | Manager     |   98129.89 | 2020-10-07 |
+|  31324 |       1 | Shrikant | Kharat    | Software E  |  250000.75 | 2024-10-06 |
+|  31323 |       1 | Gautam   | Khaire    | Software E  |  350000.75 | 2024-05-06 |
+|  31315 |       1 | Jay      | Mehta     | Product Ma  |  100000.75 | 2024-09-15 |
+|  31309 |       1 | Tanmay   | Jadhav    | Software E  |  200200.55 | 2024-12-05 |
+|  41590 |       4 | Samyak   | Kasturkar | Engineer    |  100200.05 | 2022-10-15 |
++--------+---------+----------+-----------+-------------+------------+------------+
+13 rows in set, 13 warnings (0.01 sec)
+
+mysql> select * from Project;
++---------+---------+------------+-----------+--------+-------+
+| Proj_id | Dept_id | Pname      | Plocation | Pcost  | Pyear |
++---------+---------+------------+-----------+--------+-------+
+|       1 |       1 | Mobile App | Pune      | 300000 |  2024 |
+|       2 |       1 | Blockchain | Mumbai    | 500000 |  2022 |
+|       3 |       3 | Building   | Mumbai    | 200000 |  2022 |
++---------+---------+------------+-----------+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Dept;
++---------+------------+-----------+
+| Dept_id | dname      | dlocation |
++---------+------------+-----------+
+|       1 | Computer   | Pune      |
+|       2 | IT         | Pune      |
+|       3 | ENTC       | Mumbai    |
+|       4 | Civil      | Nagpur    |
+|       5 | Auto Mobil | Nagpur    |
++---------+------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from Employee ORDER BY Emp_id DESC;
++--------+---------+----------+-----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname     | designation | salary     | JoinDate   |
++--------+---------+----------+-----------+-------------+------------+------------+
+|  41590 |       4 | Samyak   | Kasturkar | Engineer    |  100200.05 | 2022-10-15 |
+|  31981 |       2 | Yash     | Sonawane  | Software E  | 3500000.75 | 2024-12-09 |
+|  31980 |       2 | Chanchal | Wadhwa    | Software E  | 3000000.75 | 2024-12-09 |
+|  31590 |       4 | Vishal   | Kundan    | Auto Engin  |  103000.75 | 2022-09-15 |
+|  31390 |       5 | Yash     | Jadhav    | Site Engin  |  104000.75 | 2023-09-15 |
+|  31337 |       1 | Ankush   | Mehta     | Manager     |   50000000 | 2024-01-15 |
+|  31335 |       2 | Pranjal  | Deasi     | Product Ma  |   90329.89 | 2013-10-07 |
+|  31333 |       1 | Pradnya  | Kumar     | Manager     |   98129.89 | 2020-10-07 |
+|  31324 |       1 | Shrikant | Kharat    | Software E  |  250000.75 | 2024-10-06 |
+|  31323 |       1 | Gautam   | Khaire    | Software E  |  350000.75 | 2024-05-06 |
+|  31315 |       1 | Jay      | Mehta     | Product Ma  |  100000.75 | 2024-09-15 |
+|  31309 |       1 | Tanmay   | Jadhav    | Software E  |  200200.55 | 2024-12-05 |
+|  31307 |       1 | Shivam   | Dhonde    | Manager     | 3500000.75 | 2024-10-15 |
++--------+---------+----------+-----------+-------------+------------+------------+
+13 rows in set (0.00 sec)
+
+mysql> select * from Employee ORDER BY Emp_id,fname DESC;
++--------+---------+----------+-----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname     | designation | salary     | JoinDate   |
++--------+---------+----------+-----------+-------------+------------+------------+
+|  31307 |       1 | Shivam   | Dhonde    | Manager     | 3500000.75 | 2024-10-15 |
+|  31309 |       1 | Tanmay   | Jadhav    | Software E  |  200200.55 | 2024-12-05 |
+|  31315 |       1 | Jay      | Mehta     | Product Ma  |  100000.75 | 2024-09-15 |
+|  31323 |       1 | Gautam   | Khaire    | Software E  |  350000.75 | 2024-05-06 |
+|  31324 |       1 | Shrikant | Kharat    | Software E  |  250000.75 | 2024-10-06 |
+|  31333 |       1 | Pradnya  | Kumar     | Manager     |   98129.89 | 2020-10-07 |
+|  31335 |       2 | Pranjal  | Deasi     | Product Ma  |   90329.89 | 2013-10-07 |
+|  31337 |       1 | Ankush   | Mehta     | Manager     |   50000000 | 2024-01-15 |
+|  31390 |       5 | Yash     | Jadhav    | Site Engin  |  104000.75 | 2023-09-15 |
+|  31590 |       4 | Vishal   | Kundan    | Auto Engin  |  103000.75 | 2022-09-15 |
+|  31980 |       2 | Chanchal | Wadhwa    | Software E  | 3000000.75 | 2024-12-09 |
+|  31981 |       2 | Yash     | Sonawane  | Software E  | 3500000.75 | 2024-12-09 |
+|  41590 |       4 | Samyak   | Kasturkar | Engineer    |  100200.05 | 2022-10-15 |
++--------+---------+----------+-----------+-------------+------------+------------+
+13 rows in set (0.00 sec)
+
+mysql> select * from Employee ORDER BY fname DESC;
++--------+---------+----------+-----------+-------------+------------+------------+
+| Emp_id | Dept_id | fname    | lname     | designation | salary     | JoinDate   |
++--------+---------+----------+-----------+-------------+------------+------------+
+|  31981 |       2 | Yash     | Sonawane  | Software E  | 3500000.75 | 2024-12-09 |
+|  31390 |       5 | Yash     | Jadhav    | Site Engin  |  104000.75 | 2023-09-15 |
+|  31590 |       4 | Vishal   | Kundan    | Auto Engin  |  103000.75 | 2022-09-15 |
+|  31309 |       1 | Tanmay   | Jadhav    | Software E  |  200200.55 | 2024-12-05 |
+|  31324 |       1 | Shrikant | Kharat    | Software E  |  250000.75 | 2024-10-06 |
+|  31307 |       1 | Shivam   | Dhonde    | Manager     | 3500000.75 | 2024-10-15 |
+|  41590 |       4 | Samyak   | Kasturkar | Engineer    |  100200.05 | 2022-10-15 |
+|  31335 |       2 | Pranjal  | Deasi     | Product Ma  |   90329.89 | 2013-10-07 |
+|  31333 |       1 | Pradnya  | Kumar     | Manager     |   98129.89 | 2020-10-07 |
+|  31315 |       1 | Jay      | Mehta     | Product Ma  |  100000.75 | 2024-09-15 |
+|  31323 |       1 | Gautam   | Khaire    | Software E  |  350000.75 | 2024-05-06 |
+|  31980 |       2 | Chanchal | Wadhwa    | Software E  | 3000000.75 | 2024-12-09 |
+|  31337 |       1 | Ankush   | Mehta     | Manager     |   50000000 | 2024-01-15 |
++--------+---------+----------+-----------+-------------+------------+------------+
+13 rows in set (0.00 sec)
+
+mysql> select Proj_name,Plocation,Pcost from Project WHERE year=2004 OR year=2005 OR year=2007;
+ERROR 1054 (42S22): Unknown column 'Proj_name' in 'field list'
+mysql> select Pname,Plocation,Pcost from Project WHERE year=2004 OR year=2005 OR year=2007;
+ERROR 1054 (42S22): Unknown column 'year' in 'where clause'
+mysql> select Pname,Plocation,Pcost from Project WHERE Pyear=2004 OR Pyear=2005 OR Pyear=2007;
+Empty set (0.00 sec)
+
+mysql> select Pname,Plocation,Pcost from Project WHERE Pyear=2004 OR Pyear=2005 OR Pyear=2007 OR Pyear=2022;
++------------+-----------+--------+
+| Pname      | Plocation | Pcost  |
++------------+-----------+--------+
+| Blockchain | Mumbai    | 500000 |
+| Building   | Mumbai    | 200000 |
++------------+-----------+--------+
+2 rows in set (0.00 sec)
+
+mysql>  AVG(Pcost) from Project;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AVG(Pcost) from Project' at line 1
+mysql> 
+
